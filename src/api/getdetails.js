@@ -1,19 +1,12 @@
 const express = require('express');
 const { Pool } = require('pg');
- 
+ const { db } = require('../config/dbConfig');
+
 const app = express();
 const PORT = 3000;
  
-// PostgreSQL connection setup
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'mapper',
-  password: 'postgres',
-  port: 5432,
-});
+const pool = new Pool(db)
  
-// Fetch all records from "Mapper"
 app.get('/api/mapper', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM "mapper" ');
@@ -24,7 +17,6 @@ app.get('/api/mapper', async (req, res) => {
   }
 });
  
-// Fetch records by state_id from "Mapper"
 app.get('/api/mapper/state/:state_id', async (req, res) => {
   const stateId = req.params.state_id;
   try {

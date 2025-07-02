@@ -342,10 +342,10 @@ console.log(encodedUrl);
 
 //         await new Promise(resolve => setTimeout(resolve, 3000))
 
-//         await this.fillInputByName(page, 'txtbusinessAddressStreet1', payload.Registered_Agent.RA_Address.RA_Address_Line_1);
-//         await this.fillInputByName(page, 'txtbusinessAddressStreet2', payload.Registered_Agent.RA_Address.RA_Address_Line_2  || " ");
+//         await this.fillInputByName(page, 'txtbusinessAddressStreet1', payload.Registered_Agent.Address.Street_Address);
+//         await this.fillInputByName(page, 'txtbusinessAddressStreet2', payload.Registered_Agent.Address.Address_Line_2  || " ");
 
-//         await this.fillInputByName(page, 'txtbusinessAddressCity', payload.Registered_Agent.RA_Address.RA_City);
+//         await this.fillInputByName(page, 'txtbusinessAddressCity', payload.Registered_Agent.Address.City);
 //         await this.fillInputByName(page, 'txtbusinessAddressZip5', payload.Registered_Agent.RA_Address.RA_Zip_Code);
         
 //         await page.click('#chkSameAsPrinc');

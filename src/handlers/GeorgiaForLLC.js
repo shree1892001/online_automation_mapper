@@ -132,15 +132,15 @@ const data = Object.values(jsonData)[0];
            
         ];
         await this.addInput(page,registeredAgent); 
-        await this.fillInputByName(page,"PrincipalAddress.StreetAddress1",payload.Registered_Agent.RA_Address.RA_Address_Line_1);
-        await this.fillInputByName(page,"PrincipalAddress.StreetAddress2",payload.Registered_Agent.RA_Address.RA_Address_Line_2||" ");
+        await this.fillInputByName(page,"PrincipalAddress.StreetAddress1",payload.Registered_Agent.Address.Street_Address);
+        await this.fillInputByName(page,"PrincipalAddress.StreetAddress2",payload.Registered_Agent.Address.Address_Line_2||" ");
 
-        await this.fillInputByName(page,"PrincipalAddress.City",payload.Registered_Agent.RA_Address.RA_City); 
+        await this.fillInputByName(page,"PrincipalAddress.City",payload.Registered_Agent.Address.City); 
 
         await this.clickDropdown(page,"#PrincipalAddress_County",jsonData.data.County.countyName);
 
         
-        await this.fillInputByName(page,"PrincipalAddress.Zip5",payload.Registered_Agent.RA_Address.RA_Zip_Code.toString()); 
+        await this.fillInputByName(page,"PrincipalAddress.Zip5",payload.Registered_Agent.Address.Zip_Code.toString()); 
         await page.evaluate(() => {
           // Find the button and call the createAgent function directly
           const button = document.querySelector('input.button[value="Create Registered Agent"]');
@@ -159,11 +159,11 @@ const data = Object.values(jsonData)[0];
 
       await this.fillInputByName(page,"Organizer_txtFirstName",firstName1);
       await this.fillInputByName(page,"Organizer_txtLastName",lastName1);     
-     await this.fillInputByName(page,"IncorporatorAddress.StreetAddress1",payload.Organizer_Information.Org_Address.Org_Address_Line_1); 
-          await this.fillInputByName(page,"IncorporatorAddress.StreetAddress2",payload.Organizer_Information.Org_Address.Org_Address_Line_2||" "); 
+     await this.fillInputByName(page,"IncorporatorAddress.StreetAddress1",payload.Organizer_Information.Address.Street_Address); 
+          await this.fillInputByName(page,"IncorporatorAddress.StreetAddress2",payload.Organizer_Information.Address.Address_Line_2||" "); 
 
-      await this.fillInputByName(page,"IncorporatorAddress.City",payload.Organizer_Information.Org_Address.Org_City); 
-      await this.fillInputByName(page,"IncorporatorAddress.Zip5",payload.Organizer_Information.Org_Address.Org_Zip_Code.toString());
+      await this.fillInputByName(page,"IncorporatorAddress.City",payload.Organizer_Information.Address.City); 
+      await this.fillInputByName(page,"IncorporatorAddress.Zip5",payload.Organizer_Information.Address.Zip_Code.toString());
       
       await this.randomSleep(1000,3000);
       await page.evaluate(() => {

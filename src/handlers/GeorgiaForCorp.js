@@ -146,15 +146,15 @@ await this.randomSleep(10000,20000);
            
         ];
         await this.addInput(page,registeredAgent); 
-        await this.fillInputByName(page,"PrincipalAddress.StreetAddress1",payload.Registered_Agent.RA_Address.RA_Address_Line_1);
-        await this.fillInputByName(page,"PrincipalAddress.StreetAddress2",payload.Registered_Agent.RA_Address.RA_Address_Line_2||" ");
+        await this.fillInputByName(page,"PrincipalAddress.StreetAddress1",payload.Registered_Agent.Address.Street_Address);
+        await this.fillInputByName(page,"PrincipalAddress.StreetAddress2",payload.Registered_Agent.Address.Address_Line_2||" ");
 
-        await this.fillInputByName(page,"PrincipalAddress.City",payload.Registered_Agent.RA_Address.RA_City); 
+        await this.fillInputByName(page,"PrincipalAddress.City",payload.Registered_Agent.Address.City); 
 
         await this.clickDropdown(page,"#PrincipalAddress_County","Atkinson");
 
         
-        await this.fillInputByName(page,"PrincipalAddress.Zip5",payload.Registered_Agent.RA_Address.RA_Zip_Code.toString()); 
+        await this.fillInputByName(page,"PrincipalAddress.Zip5",payload.Registered_Agent.Address.Zip_Code.toString()); 
         await page.evaluate(() => {
           // Find the button and call the createAgent function directly
           const button = document.querySelector('input.button[value="Create Registered Agent"]');
