@@ -1,0 +1,445 @@
+2024-09-28 10:09:16 info: Server is running on port 3000
+2024-09-28 10:15:08 info: Received form submission request
+2024-09-28 10:15:44 info: Processing form for state: New-York
+2024-09-28 10:15:44 info: Factory creating form handler for state: New-York
+2024-09-28 10:15:44 info: Navigating to New York form submission page...
+2024-09-28 10:15:59 error: Error: net::ERR_CONNECTION_RESET at https://filings.dos.ny.gov/ords/corpanc/r/ecorp/login_desktop
+    at navigate (D:\vState-online-form-submission\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Frame.js:183:27)
+    at async Deferred.race (D:\vState-online-form-submission\node_modules\puppeteer-core\lib\cjs\puppeteer\util\Deferred.js:36:20)
+    at async CdpFrame.goto (D:\vState-online-form-submission\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Frame.js:149:25)
+    at async CdpPage.goto (D:\vState-online-form-submission\node_modules\puppeteer-core\lib\cjs\puppeteer\api\Page.js:567:20)
+    at async NewYorkForLLC (D:\vState-online-form-submission\src\handlers\NewYorkForLLCFormHandler.js:9:9)
+    at async exports.processForm (D:\vState-online-form-submission\src\services\formService.js:14:29)
+    at async exports.submitForm (D:\vState-online-form-submission\src\controllers\formController.js:9:9)
+2024-09-28 10:15:59 error: Error: New York LLC form submission failed: net::ERR_CONNECTION_RESET at https://filings.dos.ny.gov/ords/corpanc/r/ecorp/login_desktop
+    at NewYorkForLLC (D:\vState-online-form-submission\src\handlers\NewYorkForLLCFormHandler.js:44:15)
+    at async exports.processForm (D:\vState-online-form-submission\src\services\formService.js:14:29)
+    at async exports.submitForm (D:\vState-online-form-submission\src\controllers\formController.js:9:9)
+2024-09-28 10:16:00 error: Error: New York LLC form submission failed: net::ERR_CONNECTION_RESET at https://filings.dos.ny.gov/ords/corpanc/r/ecorp/login_desktop
+    at NewYorkForLLC (D:\vState-online-form-submission\src\handlers\NewYorkForLLCFormHandler.js:44:15)
+    at async exports.processForm (D:\vState-online-form-submission\src\services\formService.js:14:29)
+    at async exports.submitForm (D:\vState-online-form-submission\src\controllers\formController.js:9:9)
+2024-09-28 10:16:00 error: Error: New York LLC form submission failed: net::ERR_CONNECTION_RESET at https://filings.dos.ny.gov/ords/corpanc/r/ecorp/login_desktop
+    at NewYorkForLLC (D:\vState-online-form-submission\src\handlers\NewYorkForLLCFormHandler.js:44:15)
+    at async exports.processForm (D:\vState-online-form-submission\src\services\formService.js:14:29)
+    at async exports.submitForm (D:\vState-online-form-submission\src\controllers\formController.js:9:9)
+2024-11-11 16:21:33 info: Received form submission request
+2024-11-11 16:21:33 info: Processing form for state: New York
+2024-11-11 16:21:33 info: Factory creating form handler for state: New York
+2024-11-11 16:21:33 info: Navigating to New York form submission page...
+2024-11-11 16:21:49 info: Page loaded successfully.
+2024-11-11 16:22:01 info: Attempting dynamic input...
+2024-11-11 16:22:02 info: Existing input fields on the page:
+2024-11-11 16:22:02 info: Found input for label "Username", setting value...
+2024-11-11 16:22:02 info: Found input for label "Password", setting value...
+2024-11-11 16:22:03 info: Login form filled out successfully for New York LLC.
+2024-11-11 16:22:03 info: Form submission succeeded
+2024-11-11 16:22:37 info: Attempting dynamic input...
+2024-11-11 16:22:37 info: Existing input fields on the page:
+2024-11-11 16:22:38 info: Found input for label "P2_ENTITY_NAME", setting value...
+2024-11-11 16:22:47 info: Form submission succeeded
+2024-11-11 16:23:18 info: Dropdown option "ALBANY" selected successfully via keyboard.
+2024-11-11 16:24:54 info: Received form submission request
+2024-11-11 16:24:54 info: Processing form for state: New York
+2024-11-11 16:24:54 info: Factory creating form handler for state: New York
+2024-11-11 16:24:54 info: Navigating to New York form submission page...
+2024-11-11 16:25:07 info: Page loaded successfully.
+2024-11-11 16:25:07 info: Attempting dynamic input...
+2024-11-11 16:25:07 info: Existing input fields on the page:
+2024-11-11 16:25:07 info: Found input for label "Username", setting value...
+2024-11-11 16:25:08 info: Found input for label "Password", setting value...
+2024-11-11 16:25:08 info: Login form filled out successfully for New York CORP.
+2024-11-11 16:25:08 info: Form submission succeeded
+2024-11-11 16:25:13 warn: Attempt 1 failed: Waiting for selector `ul.t-LinksList` failed: Protocol error (Runtime.callFunctionOn): Target closed
+2024-11-11 16:25:23 warn: Attempt 2 failed: Attempted to use detached Frame '12CCCF31D65287F6F97130A59DEB7451'.
+2024-11-11 16:25:28 warn: Attempt 3 failed: Attempted to use detached Frame '12CCCF31D65287F6F97130A59DEB7451'.
+2024-11-11 16:25:28 error: Error during New York CORP submission: Action failed after 3 attempts: Attempted to use detached Frame '12CCCF31D65287F6F97130A59DEB7451'.
+2024-11-11 16:25:28 error: Error occurred while filling form: Action failed after 3 attempts: Attempted to use detached Frame '12CCCF31D65287F6F97130A59DEB7451'.
+2024-11-11 16:25:28 info: Form submission succeeded
+2024-11-11 16:25:28 info: Form submission process completed.
+2024-11-11 17:00:19 info: Received form submission request
+2024-11-11 17:00:19 info: Processing form for state: Alabama
+2024-11-11 17:00:19 info: Factory creating form handler for state: Alabama
+2024-11-11 17:00:19 info: Navigating to Alabama form submission page...
+2024-11-11 17:00:45 info: Page loaded successfully.
+2024-11-11 17:01:51 info: Dropdown option "BARBOUR" selected successfully via keyboard.
+2024-11-11 17:02:25 info: Form submission succeeded
+2024-11-11 17:02:25 info: Form submission process completed.
+2024-11-11 17:03:11 info: Received form submission request
+2024-11-11 17:03:11 info: Processing form for state: Alabama
+2024-11-11 17:03:11 info: Factory creating form handler for state: Alabama
+2024-11-11 17:03:11 info: Navigating to Alabama form submission page...
+2024-11-11 17:03:51 error: Failed to navigate to page: Attempted to use detached Frame '2210A1400D2E65E3DF2404B16B7B52A4'.
+2024-11-11 17:03:52 error: Error in Alabama For LLC form handler:
+2024-11-11 17:03:52 error: Error occurred while filling form: Alabama For LLC form submission failed: Attempted to use detached Frame '2210A1400D2E65E3DF2404B16B7B52A4'.
+2024-11-11 17:03:52 info: Form submission succeeded
+2024-11-11 17:03:52 info: Form submission process completed.
+2024-11-11 17:04:18 info: Received form submission request
+2024-11-11 17:04:18 info: Processing form for state: New York
+2024-11-11 17:04:18 info: Factory creating form handler for state: New York
+2024-11-11 17:04:18 info: Navigating to New York form submission page...
+2024-11-11 17:04:48 info: Page loaded successfully.
+2024-11-11 17:05:23 info: Attempting dynamic input...
+2024-11-11 17:05:24 info: Existing input fields on the page:
+2024-11-11 17:05:24 info: Found input for label "Username", setting value...
+2024-11-11 17:05:24 info: Found input for label "Password", setting value...
+2024-11-11 17:05:25 info: Login form filled out successfully for New York LLC.
+2024-11-11 17:05:25 info: Form submission succeeded
+2024-11-11 17:07:16 info: Attempting dynamic input...
+2024-11-11 17:07:17 info: Existing input fields on the page:
+2024-11-11 17:07:17 info: Found input for label "P2_ENTITY_NAME", setting value...
+2024-11-11 17:07:27 error: Form submission failed:
+2024-11-11 17:07:27 error: Attempt 1 failed: Submit method or button not found
+2024-11-11 17:07:27 info: Retrying in 1000 ms...
+2024-11-11 17:07:33 error: Form submission failed:
+2024-11-11 17:07:33 error: Attempt 2 failed: Submit method or button not found
+2024-11-11 17:07:33 info: Retrying in 1000 ms...
+2024-11-11 17:07:36 error: Form submission failed:
+2024-11-11 17:07:36 error: Attempt 3 failed: Submit method or button not found
+2024-11-11 17:07:36 error: New York LLC form submission failed: All 3 attempts failed: Submit method or button not found
+2024-11-11 17:07:36 error: Error occurred while filling form: All 3 attempts failed: Submit method or button not found
+2024-11-11 17:07:36 info: Form submission succeeded
+2024-11-11 17:07:36 info: Form submission process completed.
+2024-11-11 17:09:08 info: Received form submission request
+2024-11-11 17:09:08 info: Processing form for state: New York
+2024-11-11 17:09:08 info: Factory creating form handler for state: New York
+2024-11-11 17:09:08 info: Navigating to New York form submission page...
+2024-11-11 17:09:33 info: Page loaded successfully.
+2024-11-11 17:10:00 info: Attempting dynamic input...
+2024-11-11 17:10:00 info: Existing input fields on the page:
+2024-11-11 17:10:00 info: Found input for label "Username", setting value...
+2024-11-11 17:10:01 info: Found input for label "Password", setting value...
+2024-11-11 17:10:01 info: Login form filled out successfully for New York LLC.
+2024-11-11 17:10:01 info: Form submission succeeded
+2024-11-11 17:11:47 info: Attempting dynamic input...
+2024-11-11 17:11:48 info: Existing input fields on the page:
+2024-11-11 17:11:48 info: Found input for label "P2_ENTITY_NAME", setting value...
+2024-11-11 17:11:58 info: Form submission succeeded
+2024-11-11 17:12:28 error: New York LLC form submission failed: Waiting for selector `#P4_INITIAL_STATEMENT_0` failed: Waiting failed: 30000ms exceeded
+2024-11-11 17:12:28 error: Error occurred while filling form: Waiting for selector `#P4_INITIAL_STATEMENT_0` failed: Waiting failed: 30000ms exceeded
+2024-11-11 17:12:28 info: Form submission succeeded
+2024-11-11 17:12:28 info: Form submission process completed.
+2024-11-11 17:17:12 info: Received form submission request
+2024-11-11 17:17:12 info: Processing form for state: New York
+2024-11-11 17:17:12 info: Factory creating form handler for state: New York
+2024-11-11 17:17:12 info: Navigating to New York form submission page...
+2024-11-11 17:17:35 info: Page loaded successfully.
+2024-11-11 17:17:52 info: Attempting dynamic input...
+2024-11-11 17:17:52 info: Existing input fields on the page:
+2024-11-11 17:17:52 info: Found input for label "Username", setting value...
+2024-11-11 17:17:53 info: Found input for label "Password", setting value...
+2024-11-11 17:17:53 info: Login form filled out successfully for New York LLC.
+2024-11-11 17:17:53 info: Form submission succeeded
+2024-11-11 17:19:31 info: Attempting dynamic input...
+2024-11-11 17:19:32 info: Existing input fields on the page:
+2024-11-11 17:19:32 info: Found input for label "P2_ENTITY_NAME", setting value...
+2024-11-11 17:19:33 info: Form submission succeeded
+2024-11-11 17:20:03 error: New York LLC form submission failed: Waiting for selector `#P4_INITIAL_STATEMENT_0` failed: Waiting failed: 30000ms exceeded
+2024-11-11 17:20:03 error: Error occurred while filling form: Waiting for selector `#P4_INITIAL_STATEMENT_0` failed: Waiting failed: 30000ms exceeded
+2024-11-11 17:20:03 info: Form submission succeeded
+2024-11-11 17:20:03 info: Form submission process completed.
+2024-11-11 17:22:36 info: Received form submission request
+2024-11-11 17:22:36 info: Processing form for state: North Carolina
+2024-11-11 17:22:36 info: Factory creating form handler for state: North Carolina
+2024-11-11 17:22:36 warn: No handler found for state: North Carolina
+2024-11-11 17:22:36 warn: No form handler returned
+2024-11-11 17:22:36 info: Form submission succeeded
+2024-11-11 17:22:36 info: Form submission process completed.
+2024-11-11 17:25:06 info: Received form submission request
+2024-11-11 17:25:06 info: Processing form for state: Alabama
+2024-11-11 17:25:06 info: Factory creating form handler for state: Alabama
+2024-11-11 17:25:06 info: Navigating to Alabama form submission page...
+2024-11-11 17:26:36 error: Failed to navigate to page: Navigation timeout of 30000 ms exceeded
+2024-11-11 17:26:36 error: Error in Alabama For LLC form handler:
+2024-11-11 17:26:36 error: Error occurred while filling form: Alabama For LLC form submission failed: Navigation timeout of 30000 ms exceeded
+2024-11-11 17:26:36 info: Form submission succeeded
+2024-11-11 17:26:36 info: Form submission process completed.
+2024-11-11 17:27:25 info: Received form submission request
+2024-11-11 17:27:25 info: Processing form for state: Alabama
+2024-11-11 17:27:25 info: Factory creating form handler for state: Alabama
+2024-11-11 17:27:25 info: Navigating to Alabama form submission page...
+2024-11-11 17:27:52 info: Page loaded successfully.
+2024-11-11 17:29:20 info: Dropdown option "BARBOUR" selected successfully via keyboard.
+2024-11-11 17:29:56 info: Form submission succeeded
+2024-11-11 17:29:56 info: Form submission process completed.
+2024-11-11 20:00:43 info: Received form submission request
+2024-11-11 20:00:43 info: Processing form for state: New Jersey
+2024-11-11 20:00:43 info: Factory creating form handler for state: New Jersey
+2024-11-11 20:00:43 info: Navigating to New York form submission page...
+2024-11-11 20:00:49 info: Page loaded successfully.
+2024-11-11 20:00:53 info: Dropdown option "NJ Domestic Limited Liability Company (LLC)" selected successfully via keyboard.
+2024-11-11 20:00:53 info: Attempting dynamic input...
+2024-11-11 20:00:53 info: Existing input fields on the page:
+2024-11-11 20:00:53 info: Found input for label "BusinessName", filling value...
+2024-11-11 20:01:30 info: Dropdown option "LLC" selected successfully via keyboard.
+2024-11-11 20:02:05 info: Dropdown option "Authorized Representative" selected successfully via keyboard.
+2024-11-11 20:02:16 info: Form submission succeeded
+2024-11-11 20:02:16 info: Form submission process completed.
+2025-02-27 14:32:20 info: Received form submission request
+2025-02-27 14:32:20 info: Processing form for state: Alabama
+2025-02-27 14:32:20 info: Factory creating form handler for state: Alabama
+2025-02-27 14:32:20 info: Navigating to Alabama form submission page...
+2025-02-27 14:33:19 info: Page loaded successfully.
+2025-02-27 14:33:40 error: Error in Alabama For LLC form handler:
+2025-02-27 14:33:40 error: Error occurred while filling form: Alabama For LLC form submission failed: Attempted to use detached Frame '911AE357FCFB70A16D622B0AAC67B0DF'.
+2025-02-27 14:33:40 error: Error: Form filling failed: Alabama For LLC form submission failed: Attempted to use detached Frame '911AE357FCFB70A16D622B0AAC67B0DF'.
+    at exports.processForm (D:\form_automation\src\services\formService.js:17:23)
+    at async exports.submitForm (D:\form_automation\src\controllers\formController.js:10:24)
+    at async runPuppeteerScript (D:\form_automation\src\index.js:104:24)
+    at async D:\form_automation\src\index.js:117:5
+2025-02-27 14:33:40 error: Error: Form filling failed: Alabama For LLC form submission failed: Attempted to use detached Frame '911AE357FCFB70A16D622B0AAC67B0DF'.
+    at exports.processForm (D:\form_automation\src\services\formService.js:17:23)
+    at async exports.submitForm (D:\form_automation\src\controllers\formController.js:10:24)
+    at async runPuppeteerScript (D:\form_automation\src\index.js:104:24)
+    at async D:\form_automation\src\index.js:117:5
+2025-02-27 14:33:40 info: Form submission process completed.
+2025-02-27 14:33:40 error: Error: Form filling failed: Alabama For LLC form submission failed: Attempted to use detached Frame '911AE357FCFB70A16D622B0AAC67B0DF'.
+    at exports.processForm (D:\form_automation\src\services\formService.js:17:23)
+    at async exports.submitForm (D:\form_automation\src\controllers\formController.js:10:24)
+    at async runPuppeteerScript (D:\form_automation\src\index.js:104:24)
+    at async D:\form_automation\src\index.js:117:5
+2025-06-25 07:39:17 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async MappingService.getKeyMappings (D:\vstate_utils_2025\vstate-utils\src\services\mappingService.js:25:28)
+    at async MappingService.mapPayloadKeys (D:\vstate_utils_2025\vstate-utils\src\services\mappingService.js:136:33)
+    at async testMapper (D:\vstate_utils_2025\vstate-utils\test-mapper.js:38:31)
+2025-06-25 09:25:50 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async MappingService.getKeyMappings (D:\vstate_utils_2025\vstate-utils\src\services\mappingService.js:25:28)
+    at async MappingService.mapPayloadKeys (D:\vstate_utils_2025\vstate-utils\src\services\mappingService.js:136:33)
+    at async MappingService.createMappedPayload (D:\vstate_utils_2025\vstate-utils\src\services\mappingService.js:224:35)
+    at async testMapping (D:\vstate_utils_2025\vstate-utils\test-mapping-fix.js:41:31)
+2025-06-26 16:43:53 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:8:33)
+2025-06-26 16:43:53 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 16:43:54 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 16:43:54 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:43:55 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:43:55 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:43:55 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:43:55 error: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:136:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:58:53 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:8:33)
+2025-06-26 16:58:55 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 16:58:55 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 16:58:56 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:58:56 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:58:56 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:58:57 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 16:58:57 error: error: relation "form_field_mappings" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:25:33)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:06:39 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:39 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:8:33)
+2025-06-26 17:06:39 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:39 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 17:06:40 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:40 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getBusinessNameSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:86:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:31:39)
+2025-06-26 17:06:40 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:40 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:06:40 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:40 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:06:40 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:40 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:06:41 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:41 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:06:41 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:06:41 error: error: column "id" does not exist
+    at D:\vstate_utils_2025\vstate-utils\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async FormFieldMappingService.getFormFieldMappings (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:68:28)
+    at async FormFieldMappingService.findSelectorByPurpose (D:\vstate_utils_2025\vstate-utils\src\services\formFieldMappingService.js:189:30)
+    at async DynamicFormMapper.getFormSelector (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:29:30)
+    at async DynamicFormMapper.getFormSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:71:34)
+    at async DynamicFormMapper.getButtonSelectors (D:\vstate_utils_2025\vstate-utils\src\services\dynamicFormMapper.js:222:16)
+    at async testWyomingMappings (D:\vstate_utils_2025\vstate-utils\test-wyoming-mappings.js:34:33)
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:07:27 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:16:29 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:16:29 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:16:29 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:16:29 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:16:29 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:19:25 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:19:25 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:19:25 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:19:25 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-26 17:19:25 info: Using state_id: 50 for form_type: Entity_Formation, entity_type: LLC
+2025-06-27 10:02:51 error: TypeError: page.waitForTimeout is not a function
+    at debugAgreementCheckbox (D:\vstate_utils_2025\vstate-utils\debug-agreement-checkbox.js:18:20)
