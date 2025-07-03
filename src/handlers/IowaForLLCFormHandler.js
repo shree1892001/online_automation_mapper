@@ -114,7 +114,7 @@ const data = Object.values(jsonData)[0];
                 { label: 'Address Line  2', value: payload.Registered_Agent.Mailing_Information['Address_Line_2'] ||"", sectionText: 'The mailing address of its registered agent' },
                 { label: 'City', value: payload.Registered_Agent.Mailing_Information.City, sectionText: 'The mailing address of its registered agent' },
                 
-                // { label: 'State', value: payload.Registered_Agent.Address.RA_State, sectionText: 'The mailing address of its registered agent' },
+                // { label: 'State', value: payload.Registered_Agent.Address.State, sectionText: 'The mailing address of its registered agent' },
                 { 
                     label: 'State', 
                     value: (() => {

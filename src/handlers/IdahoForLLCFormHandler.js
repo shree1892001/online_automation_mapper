@@ -131,10 +131,10 @@ const data = Object.values(jsonData)[0];
            await this.fillInputByName(page,'LAST_NAME',last);
  
            const govadd =[
-            {label: 'field-address1-ByOoRiT-f',value: payload.Governor_Information.Address.GI_Address_Line_1},
-            {label: 'field-addr-city-ByOoRiT-f',value: payload.Governor_Information.Address.GI_City},
-            {label: 'field-addr-state-ByOoRiT-f',value: payload.Governor_Information.Address.GI_State},
-            {label: 'field-addr-zip-ByOoRiT-f',value:String(payload.Governor_Information.Address.GI_Zip_Code)}
+            {label: 'field-address1-ByOoRiT-f',value: payload.Governor_Information.Address.Street_Address},
+            {label: 'field-addr-city-ByOoRiT-f',value: payload.Governor_Information.Address.City},
+            {label: 'field-addr-state-ByOoRiT-f',value: payload.Governor_Information.Address.State},
+            {label: 'field-addr-zip-ByOoRiT-f',value:String(payload.Governor_Information.Address.Zip_Code)}
           ];
            await this.addInput(page, govadd);
            await this.clickDropdown(page, '#field-addr-state-ByOoRiT-f', 'ID');

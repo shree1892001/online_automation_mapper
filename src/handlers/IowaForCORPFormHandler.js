@@ -54,7 +54,7 @@ const data = Object.values(jsonData)[0];
                 { label: 'Address Line  1', value: payload.Registered_Agent.Address.Street_Address, sectionText: 'Registered agent and street address of the registered office in Iowa' },
                 { label: 'Address Line  2', value: payload.Registered_Agent.Address['Address_Line_2'] ||"", sectionText: 'Registered agent and street address of the registered office in Iowa' },
                 { label: 'City', value: payload.Registered_Agent.Address.City, sectionText: 'Registered agent and street address of the registered office in Iowa' },
-                // { label: 'State', value: payload.Registered_Agent.Address.RA_State, sectionText: 'Registered agent and street address of the registered office in Iowa' },
+                // { label: 'State', value: payload.Registered_Agent.Address.State, sectionText: 'Registered agent and street address of the registered office in Iowa' },
                 { label: 'Zip', value: String(payload.Registered_Agent.Address.Zip_Code), sectionText: 'Registered agent and street address of the registered office in Iowa' },
             ];
             await this.addInputbyselector(page, registeredAgentFields);
@@ -63,7 +63,7 @@ const data = Object.values(jsonData)[0];
                 { label: 'Address Line  1', value: payload.Registered_Agent.Mailing_Information.Street_Address, sectionText: 'The mailing address of its registered agent in Iowa' },
                 { label: 'Address Line  2', value: payload.Registered_Agent.Mailing_Information.Street_Address ||"", sectionText: 'The mailing address of its registered agent in Iowa' },
                 { label: 'City', value: payload.Registered_Agent.Mailing_Information.City, sectionText: 'The mailing address of its registered agent in Iowa' },
-                // { label: 'State', value: payload.Registered_Agent.Address.RA_State, sectionText: 'The mailing address of its registered agent in Iowa' },
+                // { label: 'State', value: payload.Registered_Agent.Address.State, sectionText: 'The mailing address of its registered agent in Iowa' },
                 
                 { 
                     label: 'State', 

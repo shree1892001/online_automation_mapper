@@ -106,7 +106,7 @@ const data = Object.values(jsonData)[0];
                 await this.addInput(page, register_agent_fields)
             await page.evaluate((payload) => {
                 const dropdown = document.querySelector('#registeredAgent\\.registeredOffice\\.state');
-                const option = Array.from(dropdown.options).find(opt => opt.text === payload.Registered_Agent.Address.RA_State.toUpperCase());
+                const option = Array.from(dropdown.options).find(opt => opt.text === payload.Registered_Agent.Address.State.toUpperCase());
         
                 if (option) {
                     dropdown.value = option.value;

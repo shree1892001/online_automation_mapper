@@ -41,7 +41,7 @@ class SouthCarolinaForCORP extends BaseFormHandler {
             await this.fillInputByName(page, 'ContactCdto.AddressCdto.Address1', payload.Registered_Agent.Address.Street_Address);
 
             await this.fillInputByName(page, 'ContactCdto.AddressCdto.City', payload.Registered_Agent.Address.City);
-            await this.clickDropdown(page, '#ContactCdto_AddressCdto_StateId', payload.Registered_Agent.Address.RA_State);
+            await this.clickDropdown(page, '#ContactCdto_AddressCdto_StateId', payload.Registered_Agent.Address.State);
             await this.fillInputByName(page, 'ContactCdto.AddressCdto.ZipCode', String(payload.Registered_Agent.Address.Zip_Code));
             await this.clickButton(page, '#ContinueButton');
             //add registered agent information
@@ -70,7 +70,7 @@ class SouthCarolinaForCORP extends BaseFormHandler {
             await this.fillInputByName(page, 'FormsCdto.AttorneyAddress.Address1', payload.Registered_Agent.Address.Street_Address);
 
             await this.fillInputByName(page, 'FormsCdto.AttorneyAddress.City', payload.Registered_Agent.Address.City);
-            await this.clickDropdown(page, '#FormsCdto_AttorneyAddress_StateId',payload.Registered_Agent.Address.RA_State);
+            await this.clickDropdown(page, '#FormsCdto_AttorneyAddress_StateId',payload.Registered_Agent.Address.State);
             await this.fillInputByName(page, 'FormsCdto.AttorneyAddress.ZipCode', String(payload.Registered_Agent.Address.Zip_Code));
             await this.clickDropdown(page, '#FormsCdto_AttorneySignatureCdto_SelectedOption', 'Attorney');
             await page.click('#AttorneySignatureConfirmationCheckbox');
