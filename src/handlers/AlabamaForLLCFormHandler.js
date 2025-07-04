@@ -37,7 +37,7 @@ class AlabamaForLLC extends BaseFormHandler {
             await this.navigateToPage(page, url);
             await page.click('a[href="introduction_input.action"]');
             await this.clickOnLinkByText(page, 'Continue to application');
-            await this.fillInputByName(page, 'contact.contactName', payload.Contact_Information.CI_Name);
+            await this.fillInputByName(page, 'contact.contactName', payload.Contact_Information.Name);
 
             // Correct phone number normalization
             const pno = payload.Contact_Information.CI_Contact_No;
@@ -50,11 +50,11 @@ class AlabamaForLLC extends BaseFormHandler {
                 throw new Error('Invalid phone number');
             }  
 
-            await this.fillInputByName(page, 'contact.emailAddress', payload.Contact_Information.CI_Email_Address);
-            await this.fillInputByName(page, 'contact.confirmEmailAddress', payload.Contact_Information.CI_Email_Address);
-            await this.fillInputByName(page, 'contact.streetAddress', payload.Contact_Information.Address.CI_Address_Line_1);
-            await this.fillInputByName(page, 'contact.city', payload.Contact_Information.Address.CI_City);
-            await this.fillInputByName(page, 'contact.zipCode', String(payload.Contact_Information.Address.CI_Zip_Code));
+            await this.fillInputByName(page, 'contact.emailAddress', payload.Contact_Information.Email_Address);
+            await this.fillInputByName(page, 'contact.confirmEmailAddress', payload.Contact_Information.Email_Address);
+            await this.fillInputByName(page, 'contact.streetAddress', payload.Contact_Information.Address.Street_Address);
+            await this.fillInputByName(page, 'contact.city', payload.Contact_Information.Address.City);
+            await this.fillInputByName(page, 'contact.zipCode', String(payload.Contact_Information.Address.Zip_Code));
             await this.clickButton(page, '#contactInformation_action_0');
             await this.fillInputByName(page, 'businessName', payload.Name.Legal_Name);
             await this.clickButton(page, '#reservation_action_0');

@@ -40,14 +40,14 @@ class SouthCarolinaForLLC extends BaseFormHandler {
             await this.clickButton(page, 'a.startButton');
             //add registered agent information
 
-            await this.fillInputByName(page, 'ContactCdto.Contact.Name', payload.Contact_Information.CI_Name);
-            await this.fillInputByName(page, 'ContactCdto.Contact.Email', payload.Contact_Information.CI_Email_Address);
+            await this.fillInputByName(page, 'ContactCdto.Contact.Name', payload.Contact_Information.Name);
+            await this.fillInputByName(page, 'ContactCdto.Contact.Email', payload.Contact_Information.Email_Address);
             await this.fillInputByName(page, 'ContactCdto.Contact.Phone', payload.Contact_Information.CI_Contact_No);
-            await this.fillInputByName(page, 'ContactCdto.AddressCdto.Address1', payload.Contact_Information.Address.CI_Address_Line_1);
+            await this.fillInputByName(page, 'ContactCdto.AddressCdto.Address1', payload.Contact_Information.Address.Street_Address);
 
-            await this.fillInputByName(page, 'ContactCdto.AddressCdto.City', payload.Contact_Information.Address.CI_City);
+            await this.fillInputByName(page, 'ContactCdto.AddressCdto.City', payload.Contact_Information.Address.City);
             await this.clickDropdown(page, '#ContactCdto_AddressCdto_StateId', payload.Contact_Information.Address.CI_State);
-            await this.fillInputByName(page, 'ContactCdto.AddressCdto.ZipCode', String(payload.Contact_Information.Address.CI_Zip_Code));
+            await this.fillInputByName(page, 'ContactCdto.AddressCdto.ZipCode', String(payload.Contact_Information.Address.Zip_Code));
             await this.clickButton(page, '#ContinueButton');
 
             await this.randomSleep(3000, 5000);

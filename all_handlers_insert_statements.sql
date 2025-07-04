@@ -146,13 +146,13 @@ VALUES
 -- Contact Information
 INSERT INTO public.mapper(state_id, order_type, entity_type, json_key, online_field_mapping)
 VALUES 
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.CI_Name', 'input[name="contact.contactName"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Name', 'input[name="contact.contactName"]'),
 (1, 'Entity Formation', 'CORP', 'payload.Incorporator_Information.Incorporator_Details.Inc_Contact_No', 'input[name="contact.primaryPhone"]'),
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.CI_Email_Address', 'input[name="contact.emailAddress"]'),
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.CI_Email_Address', 'input[name="contact.confirmEmailAddress"]'),
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.CI_Address_Line_1', 'input[name="contact.streetAddress"]'),
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.CI_City', 'input[name="contact.city"]'),
-(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.CI_Zip_Code', 'input[name="contact.zipCode"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Email_Address', 'input[name="contact.emailAddress"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Email_Address', 'input[name="contact.confirmEmailAddress"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.Street_Address', 'input[name="contact.streetAddress"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.City', 'input[name="contact.city"]'),
+(1, 'Entity Formation', 'CORP', 'payload.Contact_Information.Address.Zip_Code', 'input[name="contact.zipCode"]'),
 (1, 'Entity Formation', 'CORP', null, '#contactInformation_action_0');
 
 -- Business Name
@@ -244,13 +244,13 @@ VALUES
 -- Contact Information
 INSERT INTO public.mapper(state_id, order_type, entity_type, json_key, online_field_mapping)
 VALUES 
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.CI_Name', 'input[name="contact.contactName"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Name', 'input[name="contact.contactName"]'),
 (1, 'Entity Formation', 'LLC', 'payload.Contact_Information.CI_Contact_No', 'input[name="contact.primaryPhone"]'),
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.CI_Email_Address', 'input[name="contact.emailAddress"]'),
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.CI_Email_Address', 'input[name="contact.confirmEmailAddress"]'),
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.CI_Address_Line_1', 'input[name="contact.streetAddress"]'),
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.CI_City', 'input[name="contact.city"]'),
-(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.CI_Zip_Code', 'input[name="contact.zipCode"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Email_Address', 'input[name="contact.emailAddress"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Email_Address', 'input[name="contact.confirmEmailAddress"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.Street_Address', 'input[name="contact.streetAddress"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.City', 'input[name="contact.city"]'),
+(1, 'Entity Formation', 'LLC', 'payload.Contact_Information.Address.Zip_Code', 'input[name="contact.zipCode"]'),
 (1, 'Entity Formation', 'LLC', null, '#contactInformation_action_0');
 
 -- Business Name
