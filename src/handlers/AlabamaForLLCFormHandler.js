@@ -1,12 +1,12 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 
 class AlabamaForLLC extends BaseFormHandler {
     constructor() {
         super();
     }
 
-    // Corrected normalizePhoneNumber function
     async normalizePhoneNumber(phoneNumber) {
         // Remove all non-digit characters
         const digits = phoneNumber.replace(/\D/g, '');
@@ -25,138 +25,140 @@ class AlabamaForLLC extends BaseFormHandler {
     }
 
     async AlabamaForLLC(page,jsonData,payload) {
-        console.log(payload)
         try {
-            logger.info('Navigating to Alabama form submission page...');
-
+            logger.info('Navigating to Alabama LLC form submission page...');
+            
             const data = Object.values(jsonData)[0];
+            const stateMapping = await fetchByState(data.State.id);
+            
+            for(let i=0;i<stateMapping.length;i++){
+                if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                    console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+                }
+            }
 
             const url = data.State.stateUrl;
+            
+            // Helper function to safely get value from payload
+            const getSafeValue = async (payload, jsonKey, defaultValue = "") => {
+                const value = await this.getValueFromPayload(payload, jsonKey);
+                return value !== null && value !== undefined ? String(value) : defaultValue;
+            };
 
-            // Navigate to the page
             await this.navigateToPage(page, url);
-            await page.click('a[href="introduction_input.action"]');
-            await this.clickOnLinkByText(page, 'Continue to application');
-            await this.fillInputByName(page, 'contact.contactName', payload.Contact_Information.Name);
-
-            // Correct phone number normalization
-            const pno = payload.Contact_Information.CI_Contact_No;
-            const normalizedPhoneNumber = await this.normalizePhoneNumber(pno);
-
-            // Check if phone number normalization was successful
-            if (normalizedPhoneNumber) {
-                await this.fillInputByName(page, 'contact.primaryPhone', normalizedPhoneNumber);
+            await page.click(stateMapping[1].online_field_mapping);
+            await this.clickOnLinkByText(page, stateMapping[2].online_field_mapping);
+            
+            await this.fillInputByName(page, stateMapping[3].online_field_mapping, await getSafeValue(payload, stateMapping[3].json_key));
+            
+            const pno = await getSafeValue(payload, stateMapping[4].json_key);
+            console.log('Original phone number from payload:', pno);
+            
+            // Check if phone number exists and is not empty
+            if (!pno || pno.trim() === '') {
+                logger.warn('Phone number is empty or null, using default value');
+                await this.fillInputByName(page, stateMapping[4].online_field_mapping, '1234567890');
             } else {
-                throw new Error('Invalid phone number');
-            }  
+                const normalizedPhoneNumber = await this.normalizePhoneNumber(pno);
+                console.log('Normalized phone number:', normalizedPhoneNumber);
 
-            await this.fillInputByName(page, 'contact.emailAddress', payload.Contact_Information.Email_Address);
-            await this.fillInputByName(page, 'contact.confirmEmailAddress', payload.Contact_Information.Email_Address);
-            await this.fillInputByName(page, 'contact.streetAddress', payload.Contact_Information.Address.Street_Address);
-            await this.fillInputByName(page, 'contact.city', payload.Contact_Information.Address.City);
-            await this.fillInputByName(page, 'contact.zipCode', String(payload.Contact_Information.Address.Zip_Code));
-            await this.clickButton(page, '#contactInformation_action_0');
-            await this.fillInputByName(page, 'businessName', payload.Name.Legal_Name);
-            await this.clickButton(page, '#reservation_action_0');
-            await this.selectRadioButtonById(page, 'reservationTypeDOMESTIC');
-            await this.selectRadioButtonById(page, 'entityTypeLLC');
-            await this.clickButton(page, '#entityInformation_action_0');
+                if (normalizedPhoneNumber) {
+                    await this.fillInputByName(page, stateMapping[4].online_field_mapping, normalizedPhoneNumber);
+                } else {
+                    logger.warn(`Phone number normalization failed for: "${pno}", using original value`);
+                    // Use the original phone number if normalization fails
+                    await this.fillInputByName(page, stateMapping[4].online_field_mapping, pno);
+                }
+            }
+            
+            await this.fillInputByName(page, stateMapping[5].online_field_mapping, await getSafeValue(payload, stateMapping[5].json_key));
+            await this.fillInputByName(page, stateMapping[6].online_field_mapping, await getSafeValue(payload, stateMapping[6].json_key));
+            await this.fillInputByName(page, stateMapping[7].online_field_mapping, await getSafeValue(payload, stateMapping[7].json_key));
+            await this.fillInputByName(page, stateMapping[8].online_field_mapping, await getSafeValue(payload, stateMapping[8].json_key));
+            await this.fillInputByName(page, stateMapping[9].online_field_mapping, await getSafeValue(payload, stateMapping[9].json_key));
+            
+            await this.clickButton(page, stateMapping[10].online_field_mapping);
+            await this.fillInputByName(page, stateMapping[11].online_field_mapping, await getSafeValue(payload, stateMapping[11].json_key));
+            await this.clickButton(page, stateMapping[12].online_field_mapping);
+            await this.selectRadioButtonById(page, stateMapping[13].online_field_mapping);
+            await this.selectRadioButtonById(page, stateMapping[67].online_field_mapping); // entityTypeLLC
+            await this.clickButton(page, stateMapping[15].online_field_mapping);
+            
             //alternate legal name 
-            const isNameREplaced=await this.tryAlternate(
+            const isNameREplaced = await this.tryAlternate(
                 page, 
-                "#legalName",  // selector2
-                "h3:has-text('Filing Online')",  // selector1
-                "#entityInformation_action_0",  // nextbtnSelec
-                payload.Name.Alternate_Legal_Name 
-              
+                stateMapping[16].online_field_mapping,  // selector2
+                stateMapping[17].online_field_mapping,  // selector1
+                stateMapping[15].online_field_mapping,  // nextbtnSelec
+                await getSafeValue(payload, stateMapping[16].json_key)
             );
-            await this.clickOnLinkByText(page, 'File of Formation Data');
-            await this.selectRadioButtonById(page, 'requestorTypeORGANIZATION');
-            await this.fillInputByName(page, 'requestor.issueName', payload.Organizer_Information.keyPersonnelName);
-            await this.fillInputByName(page, 'requestor.issueStreetAddress', payload.Registered_Agent.Address.City);
-            await this.fillInputByName(page, 'requestor.issueCity', payload.Registered_Agent.Address.City);
-            await this.fillInputByName(page, 'requestor.issueZip', String(payload.Registered_Agent.Address.Zip_Code));
-            await this.clickButton(page, '#requestorInformation_action_0');
-            await page.waitForSelector('#review', { visible: true, timeout: 30000 });
-            await page.click('#review');
+            
+            await this.clickOnLinkByText(page, stateMapping[18].online_field_mapping);
+            await this.selectRadioButtonById(page, stateMapping[70].online_field_mapping); // requestorTypeORGANIZATION
+            await this.randomSleep(10000,20000);
+            
+            await this.fillInputByName(page, stateMapping[71].online_field_mapping, await getSafeValue(payload, stateMapping[71].json_key));
+            await this.fillInputByName(page, stateMapping[72].online_field_mapping, await getSafeValue(payload, stateMapping[72].json_key));
+            await this.fillInputByName(page, stateMapping[73].online_field_mapping, await getSafeValue(payload, stateMapping[73].json_key));
+            await this.fillInputByName(page, stateMapping[74].online_field_mapping, await getSafeValue(payload, stateMapping[74].json_key));
+            
+            await this.clickButton(page, stateMapping[75].online_field_mapping);
+            
+            await page.waitForSelector(stateMapping[76].online_field_mapping, { visible: true, timeout: 30000 });
+            await page.click(stateMapping[76].online_field_mapping);
             console.log('Checked the checkbox with ID "review"');
 
-            // Click the "Continue" button by ID "reviewReservation_action_0"
-            await this.clickButton(page, '#reviewReservation_action_0');
+            await this.clickButton(page, stateMapping[77].online_field_mapping);
 
-            // Select "BARBOUR" from the dropdown
-            await this.clickDropdown(page, '#countyOfFormation',jsonData.data.County.countyName);
-            console.log('Selected "BARBOUR" from the dropdown');
+            await this.clickDropdown(page, stateMapping[94].online_field_mapping, data.County.countyName);
+            console.log('Selected county from the dropdown');
 
-            // Select the radio button for LLC type with ID "llcTypeLL"
-            await this.selectRadioButtonById(page, 'llcTypeLL');
+            await this.selectRadioButtonById(page, stateMapping[78].online_field_mapping); // llcTypeLL
 
-            // Click on the next "Continue" button by ID "filingOptions_action_0"
-            await this.clickButton(page, '#filingOptions_action_0');
+            await this.clickButton(page, stateMapping[79].online_field_mapping);
 
-            // Select the registered agent type radio button with ID "registeredAgentTypeINDIVIDUAL"
-            await this.selectRadioButtonById(page, 'registeredAgentTypeINDIVIDUAL');
-            const rafullname = payload.Registered_Agent.keyPersonnelName;
+            await this.selectRadioButtonById(page, stateMapping[80].online_field_mapping);
+            
+            const rafullname = await getSafeValue(payload, stateMapping[81].json_key);
             const [firstName, lastName] = rafullname.split(' ');
             await this.fillInputByName(page, 'agent.lastName', lastName);
             await this.fillInputByName(page, 'agent.firstName', firstName);
-            await this.fillInputByName(page, 'agent.officeAddressStreet', payload.Registered_Agent.Address.Street_Address);
-            await this.fillInputByName(page, 'agent.officeAddressCity', payload.Registered_Agent.Address.City);
-            await this.fillInputByName(page, 'agent.officeAddressZipCode', String(payload.Registered_Agent.Address.Zip_Code));
+            
+            await this.fillInputByName(page, stateMapping[82].online_field_mapping, await getSafeValue(payload, stateMapping[82].json_key));
+            await this.fillInputByName(page, stateMapping[83].online_field_mapping, await getSafeValue(payload, stateMapping[83].json_key));
+            await this.fillInputByName(page, stateMapping[84].online_field_mapping, await getSafeValue(payload, stateMapping[84].json_key));
 
-            // Check the checkbox to certify registered agent
-            await page.waitForSelector('#certifyPhysicalAddress', { visible: true, timeout: 30000 });
-            await page.click('#certifyPhysicalAddress');
+            await page.waitForSelector(stateMapping[85].online_field_mapping, { visible: true, timeout: 30000 });
+            await page.click(stateMapping[85].online_field_mapping);
             console.log('Checked the checkbox with ID "certifyPhysicalAddress"');
 
-            // Click the "Copy Office Address to Mailing Address" link
-            await this.fillInputByName(page, 'agent.mailingAddressStreet', payload.Registered_Agent.Mailing_Information.Street_Address);
-            await this.fillInputByName(page, 'agent.mailingAddressCity', payload.Registered_Agent.Mailing_Information.City);
-            await this.fillInputByName(page, 'agent.mailingAddressZipCode', String(payload.Registered_Agent.Mailing_Information.Zip_Code));
-            await this.clickDropdown(page, '#mailingAddressCounty', jsonData.data.County.countyName);
-            // Check the checkbox to certify registered agent
-            await page.waitForSelector('#certifyRegisteredAgent', { visible: true, timeout: 30000 });
-            await page.click('#certifyRegisteredAgent');
+            await this.fillInputByName(page, stateMapping[86].online_field_mapping, await getSafeValue(payload, stateMapping[86].json_key));
+            await this.fillInputByName(page, stateMapping[87].online_field_mapping, await getSafeValue(payload, stateMapping[87].json_key));
+            await this.fillInputByName(page, stateMapping[88].online_field_mapping, await getSafeValue(payload, stateMapping[88].json_key));
+            
+            await this.clickDropdown(page, stateMapping[96].online_field_mapping, data.County.countyName);
+            
+            await page.waitForSelector(stateMapping[89].online_field_mapping, { visible: true, timeout: 30000 });
+            await page.click(stateMapping[89].online_field_mapping);
             console.log('Checked the checkbox with ID "certifyRegisteredAgent"');
         
-            // Click the "Continue" button by ID "registeredAgent_action_0"
-            await this.clickButton(page, '#registeredAgent_action_0');
+            await this.clickButton(page, stateMapping[90].online_field_mapping);
 
             await new Promise(resolve => setTimeout(resolve, 4000));
 
-            // Click the "Add New Organizer" button
-            // await page.click('a[href="/sos/organizers_add.action"]');
-            // const orgfullname = payload.Organizer_Information.keyPersonnelName;
-            // const [orgfirstName, orglastName] = orgfullname.split(' ');
-            // // Select radio button for organizer with ID "registeredAgentTypeINDIVIDUAL"
-            // await this.selectRadioButtonById(page, 'registeredAgentTypeINDIVIDUAL');
-            // await this.fillInputByName(page, 'organizer.lastName', orglastName);
-            // await this.fillInputByName(page, 'organizer.firstName', orgfirstName);
-            // await this.fillInputByName(page, 'organizer.officeAddressStreet', payload.Registered_Agent.Address.Street_Address);
-            // await this.fillInputByName(page, 'organizer.officeAddressCity', payload.Registered_Agent.Address.City);
-            // await this.fillInputByName(page, 'organizer.officeAddressZipCode', String(payload.Registered_Agent.Address.Zip_Code));
+            await this.clickOnLinkByText(page, stateMapping[51].online_field_mapping);
 
-            // // Copy organizer address
-            // await this.clickOnLinkByText(page, 'Copy Office Address to Mailing Address');
+            await this.clickButton(page, stateMapping[91].online_field_mapping);
 
-            // await page.waitForSelector('#organizers_action_0');  // Wait for the button to be visible
-            // await page.click('#organizers_action_0');
-            // Click "Continue" on organizer page
-            await this.clickOnLinkByText(page, 'Continue');
-
-            // Click "Continue" for document uploads
-            await this.clickButton(page, '#documentUploads_action_0');
-
-            // Check the checkbox for "cpoQuestions.other"
-            await page.waitForSelector('#other', { visible: true, timeout: 30000 });
-            await page.click('#other');
+            await page.waitForSelector(stateMapping[92].online_field_mapping, { visible: true, timeout: 30000 });
+            await page.click(stateMapping[92].online_field_mapping);
             console.log('Checked the checkbox with ID "other"');
-
-            await page.waitForSelector('#cpoQuestions_action_0');  // Wait for the button to be visible
-            await page.click('#cpoQuestions_action_0'); 
+            
+            await page.waitForSelector(stateMapping[93].online_field_mapping);
+            await page.click(stateMapping[93].online_field_mapping);
             
             const res = "form filled successfully";
-            return res                
+            return res   
         } catch (error) {
             logger.error('Error in Alabama For LLC form handler:', error.stack);
             throw new Error(`Alabama For LLC form submission failed: ${error.message}`);
