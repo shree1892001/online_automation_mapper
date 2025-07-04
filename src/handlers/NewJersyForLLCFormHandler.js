@@ -103,8 +103,8 @@ class NewJersyForLLC extends BaseFormHandler {
                 }
             await this.navigateToPage(page, url);
 
-            await this.clickDropdown(page, stateMapping[19].online_field_mapping, stateMapping[19].json_key);
-            const name1=await this.getValueFromPayload(payload, stateMapping[22].json_key);
+            await this.clickDropdown(page, stateMapping[65].online_field_mapping, stateMapping[65].json_key);
+            const name1=await this.getValueFromPayload(payload, stateMapping[1].json_key);
             const [name ,designator] = await this.extractnamedesignator(name1); 
             console.log(name,designator);
             const businessNameFields = [
@@ -112,54 +112,147 @@ class NewJersyForLLC extends BaseFormHandler {
             ];
             await this.addInput(page, businessNameFields);
             await page.keyboard.press('Enter');
-            const name2=await this.getValueFromPayload(payload, stateMapping[23].json_key);;
+            const name2=await this.getValueFromPayload(payload, stateMapping[2].json_key);
             const [name3, designator1] = await this.extractnamedesignator(name2); 
 
 
             //alternate legal name 
             const isNameREplaced=await this.tryAlternate(
                 page, 
-                stateMapping[42].online_field_mapping,  // selector2
-                stateMapping[44].online_field_mapping,  // selector1
-                stateMapping[20].online_field_mapping,  // nextbtnSelec
+                stateMapping[1].online_field_mapping,  // selector2 - BusinessName
+                stateMapping[61].online_field_mapping,  // selector1 - #BusinessNameDesignator
+                stateMapping[10].online_field_mapping,  // nextbtnSelec - input.btn.btn-success[value='Continue']
                 name3
               
             );
 
             await this.randomSleep()
-            await this.clickDropdown(page, stateMapping[44].online_field_mapping, designator);
+            await this.clickDropdown(page, stateMapping[61].online_field_mapping, designator);
             await page.keyboard.press('Enter');
-            await this.clickButton(page, stateMapping[10].online_field_mapping); // Click the submit button
+            await this.clickButton(page, stateMapping[9].online_field_mapping); // Click the submit button
             await new Promise(resolve => setTimeout(resolve, 3000))
-            await page.waitForSelector(stateMapping[63].online_field_mapping);
-            await page.click(stateMapping[63].online_field_mapping);
+            await page.waitForSelector(stateMapping[54].online_field_mapping);
+            await page.click(stateMapping[54].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 3000))
-            await page.waitForSelector(stateMapping[63].online_field_mapping);
-            await page.click(stateMapping[63].online_field_mapping);
-            await this.clickButton(page, (stateMapping[0].online_field_mapping)); // Click the continue button
-            await this.clickButton(page, (stateMapping[64].online_field_mapping)); // Click the Registered Agent link
-            await this.fillInputByName(page,stateMapping[45].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[45].json_key));
-            await this.fillInputByName(page, stateMapping[46].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[46].json_key));
-            await this.fillInputByName(page, stateMapping[47].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[47].json_key)  || " ");
+            await page.waitForSelector(stateMapping[54].online_field_mapping);
+            await page.click(stateMapping[54].online_field_mapping);
+            // Try multiple continue button selectors with better error handling
+            try {
+                await this.clickButton(page, stateMapping[0].online_field_mapping, true, { timeout: 10000, visible: true }); // Click the continue button
+            } catch (error) {
+                logger.warn(`Failed to click continue button with selector ${stateMapping[0].online_field_mapping}, trying alternative selectors...`);
+                // Try alternative continue button selectors
+                const alternativeSelectors = [
+                    'input[name="continuebtn"]',
+                    'button:contains("Continue")',
+                    'input[value="Continue"]',
+                    'button.btn-success',
+                    '.btn-primary'
+                ];
+                
+                let clicked = false;
+                for (const selector of alternativeSelectors) {
+                    try {
+                        await this.clickButton(page, selector, true, { timeout: 5000, visible: true });
+                        logger.info(`Successfully clicked continue button with alternative selector: ${selector}`);
+                        clicked = true;
+                        break;
+                    } catch (altError) {
+                        logger.warn(`Alternative selector ${selector} also failed: ${altError.message}`);
+                    }
+                }
+                
+                if (!clicked) {
+                    throw new Error(`All continue button selectors failed. Last error: ${error.message}`);
+                }
+            }
+            await this.clickButton(page, stateMapping[55].online_field_mapping); // Click the Registered Agent link
+            
+            // Helper function to safely get value from payload
+            const getSafeValue = async (payload, jsonKey, defaultValue = "") => {
+                const value = await this.getValueFromPayload(payload, jsonKey);
+                return value !== null && value !== undefined ? String(value) : defaultValue;
+            };
 
-            await this.fillInputByName(page, stateMapping[48].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[48].json_key));
-            await this.fillInputByName(page, stateMapping[49].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[49].json_key));
+            await this.fillInputByName(page, stateMapping[3].online_field_mapping, await getSafeValue(payload, stateMapping[3].json_key));
+            await this.fillInputByName(page, stateMapping[4].online_field_mapping, await getSafeValue(payload, stateMapping[4].json_key));
+            await this.fillInputByName(page, stateMapping[5].online_field_mapping, await getSafeValue(payload, stateMapping[5].json_key, " "));
+            await this.fillInputByName(page, stateMapping[6].online_field_mapping, await getSafeValue(payload, stateMapping[6].json_key));
+            await this.fillInputByName(page, stateMapping[7].online_field_mapping, await getSafeValue(payload, stateMapping[7].json_key));
 
-            await this.selectCheckboxByLabel(page, stateMapping[9].online_field_mapping);
-            await this.clickButton(page, stateMapping[10].online_field_mapping); // Submit
- this.clickButton(page, stateMapping[0].online_field_mapping);
-            await this.clickButton(page, stateMapping[11].online_field_mapping);
+            await this.selectCheckboxByLabel(page, stateMapping[8].online_field_mapping);
+            await this.clickButton(page, stateMapping[9].online_field_mapping); // Submit
+            // Try multiple continue button selectors with better error handling
+            try {
+                await this.clickButton(page, stateMapping[0].online_field_mapping, true, { timeout: 10000, visible: true });
+            } catch (error) {
+                logger.warn(`Failed to click continue button with selector ${stateMapping[0].online_field_mapping}, trying alternative selectors...`);
+                const alternativeSelectors = [
+                    'input[name="continuebtn"]',
+                    'button:contains("Continue")',
+                    'input[value="Continue"]',
+                    'button.btn-success',
+                    '.btn-primary'
+                ];
+                
+                let clicked = false;
+                for (const selector of alternativeSelectors) {
+                    try {
+                        await this.clickButton(page, selector, true, { timeout: 5000, visible: true });
+                        logger.info(`Successfully clicked continue button with alternative selector: ${selector}`);
+                        clicked = true;
+                        break;
+                    } catch (altError) {
+                        logger.warn(`Alternative selector ${selector} also failed: ${altError.message}`);
+                    }
+                }
+                
+                if (!clicked) {
+                    throw new Error(`All continue button selectors failed. Last error: ${error.message}`);
+                }
+            }
+            await this.clickButton(page, stateMapping[10].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 5000))
-            await page.waitForSelector(stateMapping[14].online_field_mapping, { visible: true, timeout: 60000 });
-            await page.click(stateMapping[14].online_field_mapping);
-            await this.fillInputByName(page, stateMapping[15].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[15].json_key));
-            await this.clickDropdown(page, stateMapping[16].online_field_mapping,stateMapping[16].json_key);
-            await this.clickButton(page, stateMapping[17].online_field_mapping); // Save
+            await page.waitForSelector(stateMapping[13].online_field_mapping, { visible: true, timeout: 60000 });
+            await page.click(stateMapping[13].online_field_mapping);
+
+            console.log("Check ",await getSafeValue(payload, stateMapping[50].json_key))
+            await this.fillInputByName(page, stateMapping[51].online_field_mapping, await getSafeValue(payload, stateMapping[51].json_key));
+            await this.clickDropdown(page, stateMapping[50].online_field_mapping, stateMapping[50].json_key);
+            await this.clickButton(page, stateMapping[14].online_field_mapping); // Save
             await this.randomSleep()
             await page.reload()
-            await page.waitForSelector(stateMapping[18].online_field_mapping, { visible: true, timeout: 3000 });
-            await page.click(stateMapping[18].online_field_mapping);
-            await this.clickButton(page, stateMapping[0].online_field_mapping)
+            await page.waitForSelector(stateMapping[15].online_field_mapping, { visible: true, timeout: 3000 });
+            await page.click(stateMapping[15].online_field_mapping);
+            // Try multiple continue button selectors with better error handling
+            try {
+                await this.clickButton(page, stateMapping[0].online_field_mapping, true, { timeout: 10000, visible: true });
+            } catch (error) {
+                logger.warn(`Failed to click final continue button with selector ${stateMapping[0].online_field_mapping}, trying alternative selectors...`);
+                const alternativeSelectors = [
+                    'input[name="continuebtn"]',
+                    'button:contains("Continue")',
+                    'input[value="Continue"]',
+                    'button.btn-success',
+                    '.btn-primary'
+                ];
+                
+                let clicked = false;
+                for (const selector of alternativeSelectors) {
+                    try {
+                        await this.clickButton(page, selector, true, { timeout: 5000, visible: true });
+                        logger.info(`Successfully clicked final continue button with alternative selector: ${selector}`);
+                        clicked = true;
+                        break;
+                    } catch (altError) {
+                        logger.warn(`Alternative selector ${selector} also failed: ${altError.message}`);
+                    }
+                }
+                
+                if (!clicked) {
+                    throw new Error(`All final continue button selectors failed. Last error: ${error.message}`);
+                }
+            }
             const res = "form filled successfully";
             return res
 
