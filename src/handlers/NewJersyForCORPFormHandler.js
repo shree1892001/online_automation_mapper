@@ -34,14 +34,14 @@ class NewJersyForCORP extends BaseFormHandler {
             const url = data.State.stateUrl;
             await this.navigateToPage(page, url);
             
-            await this.clickDropdown(page, stateMapping[20].online_field_mapping, stateMapping[20].json_key);
+            await this.clickDropdown(page, stateMapping[62].online_field_mapping, stateMapping[62].json_key);
             
            
             
             // // Get the json_key path from database
-            const jsonKeyPath = stateMapping[22].json_key; 
+            const jsonKeyPath = stateMapping[32].json_key; 
             console.log("JSon Key path :=",jsonKeyPath)// "payload.Name.Legal_Name"
-            const fieldSelector = stateMapping[22].online_field_mapping; // "BusinessName"
+            const fieldSelector = stateMapping[32].online_field_mapping; // "BusinessName"
 
             // Extract the actual value from payload using the path
             const businessName = await this.getValueFromPayload(payload, jsonKeyPath);
@@ -55,70 +55,70 @@ class NewJersyForCORP extends BaseFormHandler {
             await this.fillInputByName(page, fieldSelector, name3);
             const isNameREplaced=await this.tryAlternate(
                 page, 
-                stateMapping[42].online_field_mapping,  // selector2
-                stateMapping[48].online_field_mapping,  // selector1
-                stateMapping[20].online_field_mapping,  // nextbtnSelec
+                stateMapping[61].online_field_mapping,  // selector2
+                stateMapping[32].online_field_mapping,  // selector1
+                stateMapping[0].online_field_mapping,  // nextbtnSelec
                 name3
               
             );
           await this.clickButton(page, stateMapping[10].online_field_mapping);
-                  console.log("The designator at 37",stateMapping[24].online_field_mapping)
-            await this.clickDropdown(page, stateMapping[24].online_field_mapping,designator1);
+                  console.log("The designator at 37",stateMapping[64].online_field_mapping)
+            await this.clickDropdown(page, stateMapping[64].online_field_mapping,designator1);
             await this.clickButton(page, stateMapping[10].online_field_mapping);
             // await this.randomSleep(20000,30000);
             await new Promise(resolve => setTimeout(resolve, 2000))
 
             
-            const totalSharesValue = await this.getValueFromPayload(payload, stateMapping[62].json_key);
+            const totalSharesValue = await this.getValueFromPayload(payload, stateMapping[53].json_key);
             console.log("TotalSharesValue :=" ,totalSharesValue);
             if (totalSharesValue) {
-                await this.fillInputByName(page, stateMapping[62].online_field_mapping, totalSharesValue.toString());
+                await this.fillInputByName(page, stateMapping[53].online_field_mapping, totalSharesValue.toString());
             }
 
             await new Promise(resolve => setTimeout(resolve, 2000))
             await page.waitForSelector(stateMapping[10].online_field_mapping);
             await page.click(stateMapping[10].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 5000))
-            await page.waitForSelector(stateMapping[63].online_field_mapping);
-            await page.click(stateMapping[63].online_field_mapping);
+            await page.waitForSelector(stateMapping[54].online_field_mapping);
+            await page.click(stateMapping[54].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 5000))
             await this.clickButton(page, stateMapping[10].online_field_mapping); 
-            await this.clickButton(page, stateMapping[64].online_field_mapping); // Click the Registered Agent link
-            await this.fillInputByName(page,stateMapping[45].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[45].json_key));
-            await this.fillInputByName(page, stateMapping[46].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[46].json_key));
-            await this.fillInputByName(page, stateMapping[47].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[47].json_key)  || " ");
+            await this.clickButton(page, stateMapping[55].online_field_mapping); // Click the Registered Agent link
+            await this.fillInputByName(page,stateMapping[34].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[34].json_key));
+            await this.fillInputByName(page, stateMapping[35].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[35].json_key));
+            await this.fillInputByName(page, stateMapping[36].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[36].json_key)  || " ");
 
-            await this.fillInputByName(page, stateMapping[48].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[48].json_key));
-            await this.fillInputByName(page, stateMapping[49].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[49].json_key));
+            await this.fillInputByName(page, stateMapping[37].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[37].json_key));
+            await this.fillInputByName(page, stateMapping[38].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[38].json_key));
 
-            await this.selectCheckboxByLabel(page, stateMapping[9].online_field_mapping);
+            await this.selectCheckboxByLabel(page, stateMapping[8].online_field_mapping);
             await this.clickButton(page, stateMapping[10].online_field_mapping); // Submit
             await new Promise(resolve => setTimeout(resolve, 10000))
-            await page.waitForSelector(stateMapping[65].online_field_mapping);
-            await page.click(stateMapping[65].online_field_mapping);
-            await this.fillInputByName(page, stateMapping[56].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[56].json_key));
-            await this.fillInputByName(page, stateMapping[50].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[50].json_key));
-            await this.fillInputByName(page, stateMapping[51].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[51].json_key)  || " ");
+            await page.waitForSelector(stateMapping[56].online_field_mapping);
+            await page.click(stateMapping[56].online_field_mapping);
+            await this.fillInputByName(page, stateMapping[45].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[45].json_key));
+            await this.fillInputByName(page, stateMapping[48].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[48].json_key));
+            await this.fillInputByName(page, stateMapping[47].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[47].json_key)  || " ");
 
-            await this.fillInputByName(page, stateMapping[52].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[52].json_key));
+            await this.fillInputByName(page, stateMapping[58].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[58].json_key));
 
 
            
-            if(await this.getValueFromPayload(payload,stateMapping[68].json_key==="NJ")){
-                console.log(await this.getValueFromPayload(payload,stateMapping[68].json_key));
-                await this.clickDropdown(page, stateMapping[68].online_field_mapping, "New Jersey");
+            if(await this.getValueFromPayload(payload,stateMapping[59].json_key==="NJ")){
+                console.log(await this.getValueFromPayload(payload,stateMapping[59].json_key));
+                await this.clickDropdown(page, stateMapping[59].online_field_mapping, "New Jersey");
  
             }
             else{
  
-                await this.clickDropdown(page, stateMapping[68].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[68].json_key));
+                await this.clickDropdown(page, stateMapping[59].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[59].json_key));
             }
             
-            await this.fillInputByName(page, stateMapping[53].online_field_mapping, String(await this.getValueFromPayload(payload,stateMapping[53].json_key)));
+            await this.fillInputByName(page, stateMapping[60].online_field_mapping, String(await this.getValueFromPayload(payload,stateMapping[60].json_key)));
             await page.evaluate(() => {
                 document.body.style.zoom = '90%';
             });
-            await this.clickButton(page, stateMapping[66].online_field_mapping);
+            await this.clickButton(page, stateMapping[57].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 5000))
             await this.clickButton(page, stateMapping[0].online_field_mapping);
             await new Promise(resolve => setTimeout(resolve, 10000))
@@ -129,37 +129,39 @@ class NewJersyForCORP extends BaseFormHandler {
                     button.click();
                 }
             }); 
-            await page.waitForSelector(stateMapping[65].online_field_mapping);
-            await page.click(stateMapping[65].online_field_mapping);   
+            // await page.waitForSelector(stateMapping[65].online_field_mapping);
+            // await page.click(stateMapping[65].online_field_mapping);   
             
 
             console.log("Check :=",stateMapping[57].online_field_mapping," ",stateMapping[57].json_key)
-            await this.fillInputByName(page,stateMapping[57].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[57].json_key));
-            await this.fillInputByName(page, stateMapping[59].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[59].json_key));
+            await this.fillInputByName(page,stateMapping[46].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[46].json_key));
+            await this.fillInputByName(page, stateMapping[48].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[48].json_key));
 
-            await this.fillInputByName(page, stateMapping[67].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[67].json_key));
-            if(await this.getValueFromPayload(payload,stateMapping[60].json_key)==="NJ"){
-                console.log(await this.getValueFromPayload(payload,stateMapping[60].json_key));
-                await this.clickDropdown(page, stateMapping[60].online_field_mapping, "New Jersey");
+            await this.fillInputByName(page, stateMapping[41].online_field_mapping, await this.getValueFromPayload(payload,stateMapping[41].json_key));
+            if(await this.getValueFromPayload(payload,stateMapping[49].json_key)==="NJ"){
+                console.log(await this.getValueFromPayload(payload,stateMapping[49].json_key));
+                await this.clickDropdown(page, stateMapping[49].online_field_mapping, "New Jersey");
  
             }
             else{
  
-                await this.clickDropdown(page, stateMapping[60].online_field_mapping,await this.getValueFromPayload(payload,stateMapping[60].json_key));
+                await this.clickDropdown(page, stateMapping[49].online_field_mapping,await this.getValueFromPayload(payload,stateMapping[49].json_key));
             }
-            await this.fillInputByName(page,stateMapping[69].online_field_mapping, String(await this.getValueFromPayload(payload,stateMapping[69].json_key)));
+            await this.fillInputByName(page,stateMapping[42].online_field_mapping, String(await this.getValueFromPayload(payload,stateMapping[42].json_key)));
  
             await page.evaluate(() => {
                 document.body.style.zoom = '90%';
             });
-            await this.clickButton(page, stateMapping[66].online_field_mapping);
+            await this.clickButton(page, stateMapping[57].online_field_mapping);
             await page.evaluate(() => {
                 document.body.style.zoom = '100%';
             });
             await new Promise(resolve => setTimeout(resolve, 5000))
-            await this.clickButton(page, stateMapping[0].online_field_mapping)
-            await this.clickButton(page, stateMapping[11].online_field_mapping);
-            const labelSelector = stateMapping[55].online_field_mapping;
+            await this.clickButton(page, stateMapping[0].online_field_mapping);
+                        await this.clickButton(page, stateMapping[52].online_field_mapping)
+
+            await this.clickButton(page, stateMapping[52].online_field_mapping);
+            const labelSelector = stateMapping[15].online_field_mapping;
             await page.waitForSelector(labelSelector, { visible: true, timeout: 30000 });
             await page.reload()
             await page.click(labelSelector);
@@ -169,7 +171,7 @@ class NewJersyForCORP extends BaseFormHandler {
                 return checkbox ? checkbox.checked : null;
             }, stateMapping[56].online_field_mapping);
             // console.log(stateMapping[0].online_field_mapping); 
-            await this.clickButton(page, stateMapping[61].online_field_mapping);
+            await this.clickButton(page, stateMapping[10].online_field_mapping);
             const res = "form filled successfully";
             return res
         } catch (error) {

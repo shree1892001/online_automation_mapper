@@ -9,7 +9,7 @@ const pool = new Pool(db)
  
 app.get('/api/mapper', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM "mapper" ');
+    const result = await pool.query('SELECT * FROM "mapper" order by id asc');
     res.json(result.rows);
   } catch (err) {
     console.error('Error querying database:', err);

@@ -3,7 +3,7 @@ module.exports = {
     user: 'postgres',
     host: 'localhost',
     database: 'mapper',
-    password: 'postgres',
+    password: 'root',
     port: 5432,
   }
 };
