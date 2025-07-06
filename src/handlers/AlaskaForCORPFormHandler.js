@@ -11,7 +11,14 @@ class AlaskaForCORP extends BaseFormHandler {
         try {
             logger.info('Navigating to Alaska form submission page...');
                         const data = Object.values(jsonData)[0];
+
+
             const stateMapping = await fetchByState(data.State.id);
+
+            for(let i=0;i< stateMapping.length;i++){
+
+              console.log(i,stateMapping[i].online_field_mapping,stateMapping[i].json_key);
+            }
 
             // Helper function to safely get value from payload
             const getSafeValue = async (payload, jsonKey, defaultValue = "") => {
@@ -75,7 +82,7 @@ class AlaskaForCORP extends BaseFormHandler {
             // Legal Name
             await this.fillInputByName(newPage, stateMapping[28].online_field_mapping, await getSafeValue(payload, stateMapping[28].json_key));
 
-            // NAICS Code
+            // NAICS Code (use mapping index 29)
             await new Promise(resolve => setTimeout(resolve, 4000));
             await this.selectDropdownOptionByText(
                 newPage,
@@ -84,49 +91,50 @@ class AlaskaForCORP extends BaseFormHandler {
             );
             await new Promise(resolve => setTimeout(resolve, 4000));
 
-            // Registered Agent Name (split logic as requested)
+            // Registered Agent Name (split logic)
             const agentFullName = await getSafeValue(payload, 'payload.Registered_Agent.keyPersonnelName');
             const [firstName, lastName] = agentFullName.split(' ');
-            await this.fillInputByName(newPage, stateMapping[67].online_field_mapping, firstName);
-            await this.fillInputByName(newPage, stateMapping[68].online_field_mapping, lastName);
+            await this.fillInputByName(newPage, stateMapping[65].online_field_mapping, firstName);
+            await this.fillInputByName(newPage, stateMapping[66].online_field_mapping, lastName);
 
             // Registered Agent Mailing Address
-            await this.fillInputByName(newPage, stateMapping[52].online_field_mapping, await getSafeValue(payload, stateMapping[52].json_key));
-            await this.fillInputByName(newPage, stateMapping[53].online_field_mapping, await getSafeValue(payload, stateMapping[53].json_key) || " ");
-            await this.fillInputByName(newPage, stateMapping[54].online_field_mapping, await getSafeValue(payload, stateMapping[54].json_key));
-            await this.fillInputByName(newPage, stateMapping[55].online_field_mapping, await getSafeValue(payload, stateMapping[55].json_key));
+            await this.fillInputByName(newPage, stateMapping[67].online_field_mapping, await getSafeValue(payload, stateMapping[67].json_key));
+            await this.fillInputByName(newPage, stateMapping[68].online_field_mapping, await getSafeValue(payload, stateMapping[68].json_key) || " ");
+            await this.fillInputByName(newPage, stateMapping[69].online_field_mapping, await getSafeValue(payload, stateMapping[69].json_key));
+            await this.fillInputByName(newPage, stateMapping[70].online_field_mapping, await getSafeValue(payload, stateMapping[70].json_key));
 
             // Copy Agent Physical Address
             await this.clickButton(newPage, stateMapping[1].online_field_mapping);
 
             // Entity Mailing Address
+            await this.fillInputByName(newPage, stateMapping[71].online_field_mapping, await getSafeValue(payload, stateMapping[71].json_key));
+            await this.fillInputByName(newPage, stateMapping[72].online_field_mapping, await getSafeValue(payload, stateMapping[72].json_key) || " ");
             await this.fillInputByName(newPage, stateMapping[73].online_field_mapping, await getSafeValue(payload, stateMapping[73].json_key));
-            await this.fillInputByName(newPage, stateMapping[74].online_field_mapping, await getSafeValue(payload, stateMapping[74].json_key) || " ");
-            await this.fillInputByName(newPage, stateMapping[75].online_field_mapping, await getSafeValue(payload, stateMapping[75].json_key));
-            await this.clickDropdown(newPage, stateMapping[76].online_field_mapping, await getSafeValue(payload, stateMapping[76].json_key));
-            await this.fillInputByName(newPage, stateMapping[77].online_field_mapping, await getSafeValue(payload, stateMapping[77].json_key));
+            await this.clickDropdown(newPage, stateMapping[80].online_field_mapping, await getSafeValue(payload, stateMapping[80].json_key));
+            await this.fillInputByName(newPage, stateMapping[74].online_field_mapping, await getSafeValue(payload, stateMapping[74].json_key));
 
             // Copy Entity Physical Address
             await this.clickButton(newPage, stateMapping[2].online_field_mapping);
 
             // Shares
             await this.clickDropdown(newPage, stateMapping[3].online_field_mapping, 'Common');
-            await this.fillInputByName(newPage, stateMapping[40].online_field_mapping, await getSafeValue(payload, stateMapping[40].json_key));
+            await this.fillInputByName(newPage, stateMapping[39].online_field_mapping, await getSafeValue(payload, stateMapping[39].json_key));
             await this.clickButton(newPage, stateMapping[4].online_field_mapping);
 
             // Incorporator
             await this.clickButton(newPage, stateMapping[5].online_field_mapping);
-            const incFirstName = await getSafeValue(payload, stateMapping[78].json_key);
-            const incLastName = await getSafeValue(payload, stateMapping[79].json_key);
-            await this.fillInputByName(newPage, stateMapping[78].online_field_mapping, incFirstName);
-            await this.fillInputByName(newPage, stateMapping[79].online_field_mapping, incLastName);
+            const incName= await getSafeValue(payload, 'payload.Incorporator_Information.Incorporator_Details.keyPersonnelName');
+            const [incFirstName, incLastName] = incName.split(' ');
+           
+            await this.fillInputByName(newPage, stateMapping[40].online_field_mapping, incFirstName);
+            await this.fillInputByName(newPage, stateMapping[41].online_field_mapping, incLastName);
             await this.clickButton(newPage, stateMapping[6].online_field_mapping);
 
             // Signature
             await newPage.waitForSelector(stateMapping[7].online_field_mapping, { visible: true });
             await newPage.click(stateMapping[7].online_field_mapping);
-            await this.fillInputByName(newPage, stateMapping[80].online_field_mapping, incFirstName + ' ' + incLastName);
-            await this.fillInputByName(newPage, stateMapping[81].online_field_mapping, await getSafeValue(payload, stateMapping[81].json_key));
+            await this.fillInputByName(newPage, stateMapping[42].online_field_mapping, incFirstName + ' ' + incLastName);
+            await this.fillInputByName(newPage, stateMapping[43].online_field_mapping, await getSafeValue(payload, stateMapping[43].json_key));
             await this.clickButton(newPage, stateMapping[8].online_field_mapping);
 
             return "form filled successfully";
