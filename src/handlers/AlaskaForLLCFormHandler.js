@@ -1,5 +1,6 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 
 class AlaskaForLLC extends BaseFormHandler {
     constructor() {
@@ -7,102 +8,127 @@ class AlaskaForLLC extends BaseFormHandler {
     }
     async AlaskaForLLC(page,jsonData,payload) {
         try {
-            logger.info('Navigating to New York form submission page...');
-                        const data = Object.values(jsonData)[0];
+            logger.info('Navigating to Alaska LLC form submission page...');
+            const data = Object.values(jsonData)[0];
+            const stateMapping = await fetchByState(data.State.id);
 
-            const url = data.State.stateUrl;
-            await this.navigateToPage(page, url);
-            await this.fillInputByName(page, 'ctl00$ContentMain$TextBoxLegalName', payload.Name.Legal_Name);
-            //add business purpose
-            const inputData = [
-                { selector: '#ContentMain_TextAreaPurpose', value: payload.Purpose.Purpose_Details}
-            ];
-            await this.fillInputbyid(page, inputData);
-            //NAICS Code
-            const optionText = payload.Naics_Code.NC_NAICS_Code
+            for(let i=0;i< stateMapping.length;i++){
+
+              console.log(i,stateMapping[i].online_field_mapping,stateMapping[i].json_key);
+            }
+
+            // Helper function to safely get value from payload
+            const getSafeValue = async (payload, jsonKey, defaultValue = "") => {
+                const value = await this.getValueFromPayload(payload, jsonKey);
+                return value !== null && value !== undefined ? String(value) : defaultValue;
+            };
+
+            await this.navigateToPage(page, data.State.stateUrl);
+            
+            // Legal Name
+            await this.fillInputByName(page, stateMapping[28].online_field_mapping, await getSafeValue(payload, stateMapping[28].json_key));
+            
+            // Business Purpose (use mapping index 64)
+            await this.fillInputbyid(page, [{ selector: stateMapping[64].online_field_mapping, value: await getSafeValue(payload, stateMapping[64].json_key) }]);
+            
+            // NAICS Code (use mapping index 50)
+            const optionText = await getSafeValue(payload, stateMapping[50].json_key);
             await page.evaluate((optionText) => {
-                // Get the <select> element
                 const selectElement = document.querySelector('#ContentMain_DDLNAICS_DDLNAICS');
                 if (selectElement) {
-                  // Find the option with the given text
-                  const option = Array.from(selectElement.options).find(opt => opt.text.includes(optionText));
-                  if (option) {
-                    selectElement.value = option.value; // Set the <select> element's value
-                    const event = new Event('change', { bubbles: true }); // Trigger the change event
-                    selectElement.dispatchEvent(event);
-                  }
+                    const option = Array.from(selectElement.options).find(opt => opt.text.includes(optionText));
+                    if (option) {
+                        selectElement.value = option.value;
+                        const event = new Event('change', { bubbles: true });
+                        selectElement.dispatchEvent(event);
+                    }
                 }
-              }, optionText);
-            // await this.clickDropdown(page, '#ContentMain_DDLNAICS_DDLNAICS', payload.Naics_Code.NC_NAICS_Code);
-            //register agent details
-            const raFullName = payload.Registered_Agent.keyPersonnelName;
-            const [firstName, lastName] = raFullName.split(' ');
-            await this.fillInputByName(page, 'ctl00$ContentMain$TextBoxAgentFirstName', firstName);
-            await this.fillInputByName(page, 'ctl00$ContentMain$TextBoxAgentLastName',lastName);
-            // Mailing Address
-            await this.fillInputByName(page, 'ctl00$ContentMain$AgentMailingAddress$TextBoxLine1',payload.Registered_Agent.Mailing_Information.Street_Address);
-            await this.fillInputByName(page, 'ctl00$ContentMain$AgentMailingAddress$TextBoxLine2',payload.Registered_Agent.Mailing_Information['Address_Line_2']|| " ");
-            await this.fillInputByName(page, 'ctl00$ContentMain$AgentMailingAddress$TextBoxCityState', payload.Registered_Agent.Mailing_Information.City);
-            await this.fillInputByName(page, 'ctl00$ContentMain$AgentMailingAddress$TextBoxZip', String(payload.Registered_Agent.Mailing_Information.Zip_Code));
-            await this.clickButton(page, '#ContentMain_AgentPhysicalAddress_ButtonCopy');
-            //entity address
-            await page.waitForSelector('input[name="ctl00$ContentMain$AgentMailingAddress$TextBoxLine1"]', {
-                state: 'visible',
-              });
-            await this.fillInputByName(page, 'ctl00$ContentMain$EntityMailingAddress$TextBoxLine1', payload.Principal_Address.Street_Address);
-            await this.fillInputByName(page, 'ctl00$ContentMain$EntityMailingAddress$TextBoxLine2', payload.Principal_Address['Address_Line_2'] || " ");
-            await this.fillInputByName(page, 'ctl00$ContentMain$EntityMailingAddress$TextBoxCityState', payload.Principal_Address.City);
-            await this.clickDropdown(page, '#ContentMain_EntityMailingAddress_DDLState', payload.Principal_Address.State);
-            await this.fillInputByName(page, 'ctl00$ContentMain$EntityMailingAddress$TextBoxZip',String(payload.Principal_Address.Zip_Code));
-            await this.clickButton(page, '#ContentMain_EntityPhysicalAddress_ButtonCopy');
-            //Manager 
-            await this.selectRadioButtonById(page, 'ContentMain_RBMangerManaged');
-            //add organizer
-            await this.clickButton(page, '#ContentMain_Organizers_ButtonAdd');
-            const orgFullName = payload.Organizer_Information.keyPersonnelName;
-            const [orgfirstName, orglastName] = orgFullName.split(' ');
-            await this.fillInputByName(page, 'ctl00$ContentMain$TextBoxFirstName',orgfirstName);
-            await this.fillInputByName(page, 'ctl00$ContentMain$TextBoxLastName', orglastName);
-            await this.clickButton(page, '#ContentMain_ButtonSave');
-
-            //signature
-            await page.waitForSelector('#ContentMain_Signature_CheckBoxIPromise', { visible: true });
-            await page.click('#ContentMain_Signature_CheckBoxIPromise');
-            await this.fillInputByName(page, 'ctl00$ContentMain$Signature$TextBoxMyName',payload.Organizer_Information.keyPersonnelName);
-            await this.fillInputByName(page, 'ctl00$ContentMain$Signature$TextBoxPhone', String(payload.organizer_information.contactNo));
-            await this.clickButton(page, '#ContentMain_ButtonProceed');
-            try {
-                // Wait for the alert box to appear (if it exists) with a timeout
-                await page.waitForSelector('.deptModalContainer', { timeout: 5000 });
+            }, optionText);
             
-                // If the alert box appears, click on the "Okay" button
+            // Registered Agent Name (split logic)
+            const raFullName = await getSafeValue(payload, 'payload.Registered_Agent.keyPersonnelName');
+            const [firstName, lastName] = raFullName.split(' ');
+            await this.fillInputByName(page, stateMapping[65].online_field_mapping, firstName);
+            await this.fillInputByName(page, stateMapping[66].online_field_mapping, lastName);
+            
+            // Agent Mailing Address
+            await this.fillInputByName(page, stateMapping[67].online_field_mapping, await getSafeValue(payload, stateMapping[67].json_key));
+            await this.fillInputByName(page, stateMapping[68].online_field_mapping, await getSafeValue(payload, stateMapping[68].json_key) || " ");
+            await this.fillInputByName(page, stateMapping[69].online_field_mapping, await getSafeValue(payload, stateMapping[69].json_key));
+            await this.fillInputByName(page, stateMapping[70].online_field_mapping, await getSafeValue(payload, stateMapping[70].json_key));
+            
+            // Copy Agent Physical Address
+            await this.clickButton(page, stateMapping[1].online_field_mapping);
+            
+            // Entity Mailing Address
+            await page.waitForSelector('input[name="ctl00$ContentMain$AgentMailingAddress$TextBoxLine1"]', { state: 'visible' });
+            await this.fillInputByName(page, stateMapping[71].online_field_mapping, await getSafeValue(payload, stateMapping[71].json_key));
+            await this.fillInputByName(page, stateMapping[72].online_field_mapping, await getSafeValue(payload, stateMapping[72].json_key) || " ");
+            await this.fillInputByName(page, stateMapping[73].online_field_mapping, await getSafeValue(payload, stateMapping[73].json_key));
+            await this.randomSleep(1000,4000);
+            await this.clickDropdown(page, stateMapping[80].online_field_mapping, await getSafeValue(payload, stateMapping[80].json_key));
+            await this.fillInputByName(page, stateMapping[74].online_field_mapping, await getSafeValue(payload, stateMapping[74].json_key));
+            
+            // Copy Entity Physical Address
+            await this.clickButton(page, stateMapping[2].online_field_mapping);
+            
+            // Manager (use mapping index 11)
+            await this.selectRadioButtonById(page, stateMapping[11].online_field_mapping);
+            
+            // Add Organizer (use mapping index 12)
+            await this.clickButton(page, stateMapping[12].online_field_mapping);
+            
+            // Organizer Name (split logic)
+            const orgFullName = await getSafeValue(payload, 'payload.Organizer_Information.keyPersonnelName');
+            const [orgfirstName, orglastName] = orgFullName.split(' ');
+            await this.fillInputByName(page, stateMapping[75].online_field_mapping, orgfirstName);
+            await this.fillInputByName(page, stateMapping[76].online_field_mapping, orglastName);
+            
+            // Save button (use mapping index 13)
+            await this.clickButton(page, stateMapping[13].online_field_mapping);
+
+            // Signature (use mapping index 14)
+            await page.waitForSelector(stateMapping[14].online_field_mapping, { visible: true });
+            await page.click(stateMapping[14].online_field_mapping);
+            await this.fillInputByName(page, stateMapping[77].online_field_mapping, await getSafeValue(payload, stateMapping[77].json_key));
+            await this.fillInputByName(page, stateMapping[78].online_field_mapping, await getSafeValue(payload, stateMapping[78].json_key));
+            
+            // Proceed button (use mapping index 15)
+            await this.clickButton(page, stateMapping[15].online_field_mapping);
+            
+            // Handle name availability check
+            try {
+                await page.waitForSelector('.deptModalContainer', { timeout: 5000 });
                 console.log('Alert box detected, clicking "Okay"...');
-                await page.click('.deptModalActions .deptButton.iconBefore.icoYesBefore');
+                // Modal actions (use mapping index 16)
+                await page.click(stateMapping[16].online_field_mapping);
+                
                 const errorMessage = await page.evaluate(() => {
                     const errorElement = document.querySelector('.errors');
                     return errorElement ? errorElement.textContent.trim() : null;
-                  });
-              
-                  if (errorMessage === "Name is not available.") {
+                });
+                
+                if (errorMessage === "Name is not available.") {
                     console.log('Error detected: "Name is not available."');
-                    //alternate legal name 
-                    const inputSelector = '#ContentMain_TextBoxLegalName';
+                    // Alternate legal name
+                    const inputSelector = stateMapping[63].online_field_mapping;
                     await page.focus(inputSelector);
-
-                    // Move cursor to the start of the field and press Delete repeatedly
-                    const inputValue = await page.$eval(inputSelector, el => el.value); // Get current value
+                    
+                    // Clear the field
+                    const inputValue = await page.$eval(inputSelector, el => el.value);
                     for (let i = 0; i < inputValue.length; i++) {
-                        await page.keyboard.press('Delete'); // Press Delete to clear each character
+                        await page.keyboard.press('Delete');
                     }
-                    await page.type('#ContentMain_TextBoxLegalName', payload.Name.Alternate_Legal_Name);
-                    await this.clickButton(page, '#ContentMain_ButtonProceed');
-                  }
-              } catch (error) {
-                // If the alert box doesn't appear, continue without any action
+                    
+                    await page.type(stateMapping[63].online_field_mapping, await getSafeValue(payload, stateMapping[63].json_key));
+                    // Proceed button (use mapping index 15)
+                    await this.clickButton(page, stateMapping[15].online_field_mapping);
+                }
+            } catch (error) {
                 console.log('No alert box detected.');
-              }
-            const res = "form filled successfully";
-            return res
+            }
+            
+            return "form filled successfully";
         } catch (error) {
             logger.error('Error in Alaska For LLC form handler:', error.stack);
             throw new Error(`Alaska For LLC form submission failed: ${error.message}`);

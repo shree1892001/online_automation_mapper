@@ -1,5 +1,6 @@
 const BaseFormHandler = require('../handlers/BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 const mappingService = require('../services/mappingService');
 
 class SouthDakotaForLLC extends BaseFormHandler {

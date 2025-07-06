@@ -1,5 +1,6 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 const { json } = require('express');
 const { timeout } = require('puppeteer');
 
@@ -13,6 +14,14 @@ class ColoradoForCorp extends BaseFormHandler {
 
             console.log("Payload :",payload)
             const data = Object.values(jsonData)[0];
+
+            const stateMapping = await fetchByState(data.State.id);
+            
+            for(let i=0;i<stateMapping.length;i++){
+                if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                    console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+                }
+            }
 
             const url = data.State.stateUrl;
             await this.navigateToPage(page, url);

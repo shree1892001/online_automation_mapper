@@ -1,5 +1,6 @@
 const logger = require('../utils/logger');
 const BaseFormHandler = require('./BaseFormHandler');
+const { fetchByState } = require('../utils/getByState');
 
 class MichiganCORP extends BaseFormHandler {
     constructor() {
@@ -11,7 +12,15 @@ class MichiganCORP extends BaseFormHandler {
         logger.info('Navigating to New York form submission page...');
         const data = Object.values(jsonData)[0];
 
-            const url = data.State.stateUrl;
+        const stateMapping = await fetchByState(data.State.id);
+        
+        for(let i=0;i<stateMapping.length;i++){
+            if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+            }
+        }
+
+        const url = data.State.stateUrl;
         await this.navigateToPage(page, url)
         await page.click('#MainContent_parentRepeater_childRepeater_3_link_0');
         // await this.clickLinkByLabel(page,'500 - ARTICLES OF INCORPORATION');

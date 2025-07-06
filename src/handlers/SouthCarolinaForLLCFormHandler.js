@@ -1,5 +1,6 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 
 class SouthCarolinaForLLC extends BaseFormHandler {
     constructor() {

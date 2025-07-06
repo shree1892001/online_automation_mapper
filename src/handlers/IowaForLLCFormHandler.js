@@ -1,5 +1,6 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 const path = require('path');  // Ensure path is imported here
 
 
@@ -11,7 +12,15 @@ class IowaForLLC extends BaseFormHandler {
         try {
             console.log(payload)
             logger.info('Navigating to New York form submission page...');
-const data = Object.values(jsonData)[0];
+            const data = Object.values(jsonData)[0];
+
+            const stateMapping = await fetchByState(data.State.id);
+            
+            for(let i=0;i<stateMapping.length;i++){
+                if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                    console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+                }
+            }
 
             const url = data.State.stateUrl;            await this.navigateToPage(page, url);
             const inputFields = [
@@ -62,24 +71,14 @@ const data = Object.values(jsonData)[0];
             ];
             await this.addInputbyselector(page, principalOfficeFields);
             
-              
-                    (() => {
-                    if (payload.Principal_Address.State === 'IA') {
-                        return 'IOWA';
-                    } else if (payload.Principal_Address.State === 'ID') {
-                        return 'IDAHO';
-                    } else {
-                        return payload.Principal_Address.State; // Default to the provided state value
-                    }
-                })(), 
-                await this.clickDropdown(page,'[id$="_State"]',payload.Principal_Address.State);
+            await this.clickDropdown(page,'[id$="_State"]',payload.Principal_Address.State);
             
 
             //Mailing Principal Office
             const principalOfficemailingFields = [
-                { label: 'Address Line  1', value: payload.Principal_Address.Street_Address, sectionText: 'The mailing address of the entity’s principal office' },
-                { label: 'Address Line  2', value: payload.Principal_Address['Address_Line_2'] || "", sectionText: 'The mailing address of the entity’s principal office' },
-                { label: 'City', value: payload.Principal_Address.City, sectionText: 'The mailing address of the entity’s principal office' },
+                { label: 'Address Line  1', value: payload.Principal_Address.Street_Address, sectionText: 'The mailing address of the entity\'s principal office' },
+                { label: 'Address Line  2', value: payload.Principal_Address['Address_Line_2'] || "", sectionText: 'The mailing address of the entity\'s principal office' },
+                { label: 'City', value: payload.Principal_Address.City, sectionText: 'The mailing address of the entity\'s principal office' },
                 { 
                     label: 'State', 
                     value: (() => {
@@ -91,9 +90,9 @@ const data = Object.values(jsonData)[0];
                             return payload.Principal_Address.State; // Default to the provided state value
                         }
                     })(), 
-                    sectionText: 'The mailing address of the entity’s principal office' 
+                    sectionText: 'The mailing address of the entity\'s principal office' 
                 },
-                { label: 'Zip', value: String(payload.Principal_Address.Zip_Code), sectionText: 'The mailing address of the entity’s principal office' },
+                { label: 'Zip', value: String(payload.Principal_Address.Zip_Code), sectionText: 'The mailing address of the entity\'s principal office' },
             ];
             await this.addInputbyselector(page, principalOfficemailingFields);
             const registeredAgentFields = [

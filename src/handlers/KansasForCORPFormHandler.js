@@ -1,5 +1,6 @@
 const BaseFormHandler = require('./BaseFormHandler');
 const logger = require('../utils/logger');
+const { fetchByState } = require('../utils/getByState');
 
 class KansasForCORP extends BaseFormHandler {
     constructor() {
@@ -11,9 +12,19 @@ class KansasForCORP extends BaseFormHandler {
       try {
         logger.info('Navigating to Kansas form submission page...');
 
-const data = Object.values(jsonData)[0];
+        const data = Object.values(jsonData)[0];
 
-            const url = data.State.stateUrl;          await this.navigateToPage(page, url);
+        const stateMapping = await fetchByState(data.State.id);
+        
+        for(let i=0;i<stateMapping.length;i++){
+            if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+            }
+        }
+
+        const url = data.State.stateUrl;
+        
+        await this.navigateToPage(page, url);
         
         const loginLinkSelector = 'a[href="https://www.sos.ks.gov/eforms/user_login.aspx?frm=BS"]';
           await page.waitForSelector(loginLinkSelector, { visible: true });
