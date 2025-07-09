@@ -71,9 +71,9 @@ class IllinoisForLLC extends BaseFormHandler {
             await this.clickButton(page, 'input[type="submit"].formbutton');
             // fill input organizer address
             await this.fillInputByName(page, 'name', payload.Member_Or_Manager_Details[0].Mom_Name);
-            await this.fillInputByName(page, 'street', payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_1);
-            await this.fillInputByName(page, 'city', payload.Member_Or_Manager_Details[0].Address.MM_City);
-            await this.fillInputByName(page, 'zipCode', payload.Member_Or_Manager_Details[0].Address.MM_Zip_Code.toString());
+            await this.fillInputByName(page, 'street', payload.Member_Or_Manager_Details[0].Address.Street_Address);
+            await this.fillInputByName(page, 'city', payload.Member_Or_Manager_Details[0].Address.City);
+            await this.fillInputByName(page, 'zipCode', payload.Member_Or_Manager_Details[0].Address.Zip_Code.toString());
             await this.clickDropdown(page, 'select[name="state"]', payload.Member_Or_Manager_Details[0].Address.MM_State);
             await this.clickButton(page, 'input[type="submit"].formbutton');
             const res = "form filled successfully";

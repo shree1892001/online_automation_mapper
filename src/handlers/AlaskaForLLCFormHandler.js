@@ -11,11 +11,11 @@ class AlaskaForLLC extends BaseFormHandler {
             logger.info('Navigating to Alaska LLC form submission page...');
             const data = Object.values(jsonData)[0];
             const stateMapping = await fetchByState(data.State.id);
-
+            
             for(let i=0;i< stateMapping.length;i++){
 
               console.log(i,stateMapping[i].online_field_mapping,stateMapping[i].json_key);
-            }
+                }
 
             // Helper function to safely get value from payload
             const getSafeValue = async (payload, jsonKey, defaultValue = "") => {
@@ -36,14 +36,14 @@ class AlaskaForLLC extends BaseFormHandler {
             await page.evaluate((optionText) => {
                 const selectElement = document.querySelector('#ContentMain_DDLNAICS_DDLNAICS');
                 if (selectElement) {
-                    const option = Array.from(selectElement.options).find(opt => opt.text.includes(optionText));
-                    if (option) {
+                  const option = Array.from(selectElement.options).find(opt => opt.text.includes(optionText));
+                  if (option) {
                         selectElement.value = option.value;
                         const event = new Event('change', { bubbles: true });
-                        selectElement.dispatchEvent(event);
-                    }
+                    selectElement.dispatchEvent(event);
+                  }
                 }
-            }, optionText);
+              }, optionText);
             
             // Registered Agent Name (split logic)
             const raFullName = await getSafeValue(payload, 'payload.Registered_Agent.keyPersonnelName');
@@ -106,14 +106,14 @@ class AlaskaForLLC extends BaseFormHandler {
                 const errorMessage = await page.evaluate(() => {
                     const errorElement = document.querySelector('.errors');
                     return errorElement ? errorElement.textContent.trim() : null;
-                });
-                
-                if (errorMessage === "Name is not available.") {
+                  });
+              
+                  if (errorMessage === "Name is not available.") {
                     console.log('Error detected: "Name is not available."');
                     // Alternate legal name
                     const inputSelector = stateMapping[63].online_field_mapping;
                     await page.focus(inputSelector);
-                    
+
                     // Clear the field
                     const inputValue = await page.$eval(inputSelector, el => el.value);
                     for (let i = 0; i < inputValue.length; i++) {
@@ -123,10 +123,10 @@ class AlaskaForLLC extends BaseFormHandler {
                     await page.type(stateMapping[63].online_field_mapping, await getSafeValue(payload, stateMapping[63].json_key));
                     // Proceed button (use mapping index 15)
                     await this.clickButton(page, stateMapping[15].online_field_mapping);
-                }
-            } catch (error) {
+                  }
+              } catch (error) {
                 console.log('No alert box detected.');
-            }
+              }
             
             return "form filled successfully";
         } catch (error) {

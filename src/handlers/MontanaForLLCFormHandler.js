@@ -120,10 +120,10 @@ class MontanaForLLC extends BaseFormHandler {
                 ];
             await this.addInput(page, register_agent_fields)
             const inputDataorg = [
-                { selector: '#field-address1-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_1 },
-                { selector: '#field-address2-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_2  || " " },
-                { selector: '#field-addr-city-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.MM_City },
-                { selector: '#field-addr-zip-HycDG_Dim', value: String(payload.Member_Or_Manager_Details[0].Address.MM_Zip_Code)}
+                { selector: '#field-address1-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.Street_Address },
+                { selector: '#field-address2-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.Address_Line_2  || " " },
+                { selector: '#field-addr-city-HycDG_Dim', value: payload.Member_Or_Manager_Details[0].Address.City },
+                { selector: '#field-addr-zip-HycDG_Dim', value: String(payload.Member_Or_Manager_Details[0].Address.Zip_Code)}
             ];
             await this.fillInputbyid(page, inputDataorg);
             await page.evaluate(() => {

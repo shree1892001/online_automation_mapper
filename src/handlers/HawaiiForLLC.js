@@ -219,14 +219,14 @@ class HawaiiForLLC extends BaseFormHandler {
                 //   await page.type('input[name="managersOrMembers[0].name"]', payload.Member_Or_Manager_Details.Mom_Name.toString());
                   await this.fillInputByName(page,"managersOrMembers[0].name",payload.Member_Or_Manager_Details[0].Mom_Name);
                   // await page.select('select[name="managersOrMembers[0].address.country"]', payload.Memeber_or_Manager_Details.Address.MM_Country);
-                  await page.type('input[name="managersOrMembers[0].address.street1"]', payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_1);
-                  await page.type('input[name="managersOrMembers[0].address.street2"]', payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_2 || " ");
-                  await page.type('input[name="managersOrMembers[0].address.city"]', payload.Member_Or_Manager_Details[0].Address.MM_City);
+                  await page.type('input[name="managersOrMembers[0].address.street1"]', payload.Member_Or_Manager_Details[0].Address.Street_Address);
+                  await page.type('input[name="managersOrMembers[0].address.street2"]', payload.Member_Or_Manager_Details[0].Address.Address_Line_2 || " ");
+                  await page.type('input[name="managersOrMembers[0].address.city"]', payload.Member_Or_Manager_Details[0].Address.City);
  
                   await this.clickDropdown(page,"#managersOrMembers\\[0\\]\\.address\\.state",payload.Member_Or_Manager_Details[0].Address.MM_State)
 
                 // await this.clickButton(page,"#managersOrMembers[0].address.state",payload.Member_Or_Manager_Details[0].Address.MM_State)
-                  await page.type('input[name="managersOrMembers[0].address.zip"]', payload.Member_Or_Manager_Details[0].Address.MM_Zip_Code.toString());
+                  await page.type('input[name="managersOrMembers[0].address.zip"]', payload.Member_Or_Manager_Details[0].Address.Zip_Code.toString());
 
 
                 

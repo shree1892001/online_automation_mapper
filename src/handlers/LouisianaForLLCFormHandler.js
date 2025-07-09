@@ -146,11 +146,11 @@ class LouisianaForLLC extends BaseFormHandler {
             await this.fillInputByName(page, 'last-name-67983-1', orglastName);
             await this.clickDropdown(page, '#roles-67983-1', 'Manager');
             await new Promise(resolve => setTimeout(resolve, 5000))
-            await this.fillInputByName(page, 'address1-67983-1', payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_1);
-            await this.fillInputByName(page, 'address2-67983-1', payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_2 ||"");
-            await this.fillInputByName(page, 'inpCity-67983-1', payload.Member_Or_Manager_Details[0].Address.MM_City);
+            await this.fillInputByName(page, 'address1-67983-1', payload.Member_Or_Manager_Details[0].Address.Street_Address);
+            await this.fillInputByName(page, 'address2-67983-1', payload.Member_Or_Manager_Details[0].Address.Address_Line_2 ||"");
+            await this.fillInputByName(page, 'inpCity-67983-1', payload.Member_Or_Manager_Details[0].Address.City);
             await this.clickDropdown(page, '#ddlState-67983-1',payload.Member_Or_Manager_Details[0].Address.MM_State );
-            await this.fillInputByName(page, 'inpZip-67983-1', String(payload.Member_Or_Manager_Details[0].Address.MM_Zip_Code));
+            await this.fillInputByName(page, 'inpZip-67983-1', String(payload.Member_Or_Manager_Details[0].Address.Zip_Code));
             await this.fillInputByName(page, 'phone-67983-1', payload.organizer_information.contactNo);
             await this.clickButton(page, '#btnNext');
             await page.waitForSelector('input[type="radio"][name="radio-yes-no-68289"][value="false"]', { visible: true });

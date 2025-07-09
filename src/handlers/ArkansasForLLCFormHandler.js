@@ -160,10 +160,10 @@ class ArkansasForLLC extends BaseFormHandler {
             await this.clickDropdown(page, '#officer_title', 'Member');
   
             const Memberadd =[
-              {label: 'officer_address_1',value: payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_1},
-              {label: 'officer_address_2',value: payload.Member_Or_Manager_Details[0].Address.MM_Address_Line_2|| " "},
-              {label: 'officer_city',value: payload.Member_Or_Manager_Details[0].Address.MM_City},
-              {label: 'officer_zip_code',value: payload.Member_Or_Manager_Details[0].Address.MM_Zip_Code.toString()}
+              {label: 'officer_address_1',value: payload.Member_Or_Manager_Details[0].Address.Street_Address},
+              {label: 'officer_address_2',value: payload.Member_Or_Manager_Details[0].Address.Address_Line_2|| " "},
+              {label: 'officer_city',value: payload.Member_Or_Manager_Details[0].Address.City},
+              {label: 'officer_zip_code',value: payload.Member_Or_Manager_Details[0].Address.Zip_Code.toString()}
             ];
             await this.addInput(page, Memberadd);
             await page.click('input[name="save_add_officer"]');
