@@ -52,89 +52,94 @@ class FloridaForCORP extends BaseFormHandler {
             
             // Fill corporation name
             const businessName = await this.getValueFromPayload(payload, stateMapping[0].json_key);
-            const corpNameField = stateMapping[0].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const corpNameField = this.extractFieldName(stateMapping[0].online_field_mapping);
             await this.fillInputByName(page, corpNameField, businessName);
             
             // Fill stock shares
             const stockSharesValue = await this.getValueFromPayload(payload, stateMapping[1].json_key);
-            const stockSharesField = stateMapping[1].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const stockSharesField = this.extractFieldName(stateMapping[1].online_field_mapping);
             await this.fillInputByName(page, stockSharesField, String(stockSharesValue));
 
             // Fill principal address
             const princAddr1Value = await this.getValueFromPayload(payload, stateMapping[2].json_key);
-            const princAddr1Field = stateMapping[2].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const princAddr1Field = this.extractFieldName(stateMapping[2].online_field_mapping);
             await this.fillInputByName(page, princAddr1Field, princAddr1Value);
             
             const princCityValue = await this.getValueFromPayload(payload, stateMapping[3].json_key);
-            const princCityField = stateMapping[3].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const princCityField = this.extractFieldName(stateMapping[3].online_field_mapping);
             await this.fillInputByName(page, princCityField, princCityValue);
             
             const princStValue = await this.getValueFromPayload(payload, stateMapping[4].json_key);
-            const princStField = stateMapping[4].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const princStField = this.extractFieldName(stateMapping[4].online_field_mapping);
             await this.fillInputByName(page, princStField, princStValue);
             
             const princZipValue = await this.getValueFromPayload(payload, stateMapping[5].json_key);
-            const princZipField = stateMapping[5].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const princZipField = this.extractFieldName(stateMapping[5].online_field_mapping);
             await this.fillInputByName(page, princZipField, String(princZipValue));
             
             // Fill country (hardcoded value)
-            const princCntryField = stateMapping[29].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const princCntryField = this.extractFieldName(stateMapping[29].online_field_mapping);
             await this.fillInputByName(page, princCntryField, "United States");
             
             /* MAILING ADDRESS */
             const mailAddr1Value = await this.getValueFromPayload(payload, stateMapping[6].json_key);
-            const mailAddr1Field = stateMapping[6].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const mailAddr1Field = this.extractFieldName(stateMapping[6].online_field_mapping);
             await this.fillInputByName(page, mailAddr1Field, mailAddr1Value);
             
             const mailCityValue = await this.getValueFromPayload(payload, stateMapping[7].json_key);
-            const mailCityField = stateMapping[7].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const mailCityField = this.extractFieldName(stateMapping[7].online_field_mapping);
             await this.fillInputByName(page, mailCityField, mailCityValue);
             
             const mailStValue = await this.getValueFromPayload(payload, stateMapping[8].json_key);
-            const mailStField = stateMapping[8].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const mailStField = this.extractFieldName(stateMapping[8].online_field_mapping);
             await this.fillInputByName(page, mailStField, mailStValue);
             
             const mailZipValue = await this.getValueFromPayload(payload, stateMapping[9].json_key);
-            const mailZipField = stateMapping[9].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const mailZipField = this.extractFieldName(stateMapping[9].online_field_mapping);
             await this.fillInputByName(page, mailZipField, String(mailZipValue));
              
             // Fill registered agent information
-            const rafullname = payload.Registered_Agent.keyPersonnelName;
+            const rafullname = await this.getValueFromPayload(payload, stateMapping[10].json_key);
             const [firstName, lastName] = await this.ra_split(rafullname); 
+            // Note: These field names might need to be added to the database mapping
             await this.fillInputByName(page, 'ra_name_last_name', lastName);
             await this.fillInputByName(page, 'ra_name_first_name', firstName);
             
             const raAddr1Value = await this.getValueFromPayload(payload, stateMapping[11].json_key);
-            const raAddr1Field = stateMapping[11].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const raAddr1Field = this.extractFieldName(stateMapping[11].online_field_mapping);
             await this.fillInputByName(page, raAddr1Field, raAddr1Value);
             
             const raCityValue = await this.getValueFromPayload(payload, stateMapping[12].json_key);
-            const raCityField = stateMapping[12].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const raCityField = this.extractFieldName(stateMapping[12].online_field_mapping);
             await this.fillInputByName(page, raCityField, raCityValue);
             
             const raZipValue = await this.getValueFromPayload(payload, stateMapping[13].json_key);
-            const raZipField = stateMapping[13].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const raZipField = this.extractFieldName(stateMapping[13].online_field_mapping);
             await this.fillInputByName(page, raZipField, String(raZipValue));
             
             const raSignatureValue = await this.getValueFromPayload(payload, stateMapping[10].json_key);
-            const raSignatureField = stateMapping[10].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const raSignatureField = this.extractFieldName(stateMapping[10].online_field_mapping);
             await this.fillInputByName(page, raSignatureField, raSignatureValue);
             
             // Fill incorporator information
             const incorporator1Value = await this.getValueFromPayload(payload, stateMapping[14].json_key);
-            const incorporator1Field = stateMapping[14].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const incorporator1Field = this.extractFieldName(stateMapping[14].online_field_mapping);
             await this.fillInputByName(page, incorporator1Field, incorporator1Value);
             
             const incorporator2Value = await this.getValueFromPayload(payload, stateMapping[15].json_key);
-            const incorporator2Field = stateMapping[15].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const incorporator2Field = this.extractFieldName(stateMapping[15].online_field_mapping);
             await this.fillInputByName(page, incorporator2Field, incorporator2Value);
             
-            const incorporator4Value = `${payload.Incorporator_Information.Address.City}, ${payload.Incorporator_Information.Address.State}, ${String(payload.Incorporator_Information.Address.Zip_Code)}`;
-            const incorporator4Field = stateMapping[18].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            // Get incorporator city, state, zip from database mappings
+            const incorporatorCityValue = await this.getValueFromPayload(payload, stateMapping[16].json_key);
+            const incorporatorStateValue = await this.getValueFromPayload(payload, stateMapping[17].json_key);
+            const incorporatorZipValue = await this.getValueFromPayload(payload, stateMapping[18].json_key);
+            const incorporator4Value = `${incorporatorCityValue}, ${incorporatorStateValue}, ${String(incorporatorZipValue)}`;
+            const incorporator4Field = this.extractFieldName(stateMapping[18].online_field_mapping);
             await this.fillInputByName(page, incorporator4Field, incorporator4Value);
             
             const signatureValue = await this.getValueFromPayload(payload, stateMapping[19].json_key);
-            const signatureField = stateMapping[19].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const signatureField = this.extractFieldName(stateMapping[19].online_field_mapping);
             await this.fillInputByName(page, signatureField, signatureValue);
             
             // Fill purpose
@@ -143,45 +148,42 @@ class FloridaForCORP extends BaseFormHandler {
 
             // Fill correspondence information
             const retNameValue = await this.getValueFromPayload(payload, stateMapping[21].json_key);
-            const retNameField = stateMapping[21].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const retNameField = this.extractFieldName(stateMapping[21].online_field_mapping);
             await this.fillInputByName(page, retNameField, retNameValue);
             
             const retEmailAddrValue = await this.getValueFromPayload(payload, stateMapping[22].json_key);
-            const retEmailAddrField = stateMapping[22].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const retEmailAddrField = this.extractFieldName(stateMapping[22].online_field_mapping);
             await this.fillInputByName(page, retEmailAddrField, retEmailAddrValue);
             
             const emailAddrVerifyValue = await this.getValueFromPayload(payload, stateMapping[23].json_key);
-            const emailAddrVerifyField = stateMapping[23].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const emailAddrVerifyField = this.extractFieldName(stateMapping[23].online_field_mapping);
             await this.fillInputByName(page, emailAddrVerifyField, emailAddrVerifyValue);
             
             // Fill officer information
-            const ofcrfullName = payload.Officer_Information.Officer_Details.keyPersonnelName;
+            const ofcrfullName = await this.getValueFromPayload(payload, stateMapping[24].json_key);
             const [ofcrfirstName, ofcrlastName] = await this.ra_split(ofcrfullName);
             
-            // Handle the officer title field - check if it's already a field name or needs extraction
-            let off1NameTitleField = stateMapping[32].online_field_mapping;
-            if (off1NameTitleField.startsWith('input[name="') && off1NameTitleField.endsWith('"]')) {
-                off1NameTitleField = off1NameTitleField.replace('input[name="', '').replace('"]', '');
-            }
+            const off1NameTitleField = this.extractFieldName(stateMapping[32].online_field_mapping);
             await this.fillInputByName(page, off1NameTitleField, 'MGR');
             
+            // Note: These field names might need to be added to the database mapping
             await this.fillInputByName(page, 'off1_name_last_name', ofcrlastName);
             await this.fillInputByName(page, 'off1_name_first_name', ofcrfirstName);
             
             const off1NameAddr1Value = await this.getValueFromPayload(payload, stateMapping[25].json_key);
-            const off1NameAddr1Field = stateMapping[25].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const off1NameAddr1Field = this.extractFieldName(stateMapping[25].online_field_mapping);
             await this.fillInputByName(page, off1NameAddr1Field, off1NameAddr1Value);
             
             const off1NameCityValue = await this.getValueFromPayload(payload, stateMapping[26].json_key);
-            const off1NameCityField = stateMapping[26].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const off1NameCityField = this.extractFieldName(stateMapping[26].online_field_mapping);
             await this.fillInputByName(page, off1NameCityField, off1NameCityValue);
             
             const off1NameStValue = await this.getValueFromPayload(payload, stateMapping[27].json_key);
-            const off1NameStField = stateMapping[27].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const off1NameStField = this.extractFieldName(stateMapping[27].online_field_mapping);
             await this.fillInputByName(page, off1NameStField, off1NameStValue);
             
             const off1NameZipValue = await this.getValueFromPayload(payload, stateMapping[28].json_key);
-            const off1NameZipField = stateMapping[28].online_field_mapping.replace('input[name="', '').replace('"]', '');
+            const off1NameZipField = this.extractFieldName(stateMapping[28].online_field_mapping);
             await this.fillInputByName(page, off1NameZipField, String(off1NameZipValue));
             
             // Get continue button selector
