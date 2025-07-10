@@ -11,6 +11,13 @@ class DcForLLC extends BaseFormHandler {
         try {
             logger.info('Navigating to New York form submission page...');
 const data = Object.values(jsonData)[0];
+const stateMapping = await fetchByState(data.State.id);
+            
+            for(let i=0;i<stateMapping.length;i++){
+                if(data.orderType === stateMapping[0].order_type || data.orderFullDesc === stateMapping[0].entity_type){
+                    console.log(stateMapping[i].online_field_mapping,stateMapping[i].json_key,i);
+                }
+            }
 
             const url = data.State.stateUrl;            await this.navigateToPage(page, url);
             page.click('a[href="/Account.aspx/AccessDcLogOn?isAccessDc=true"]')

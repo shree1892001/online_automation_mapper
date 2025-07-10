@@ -34,8 +34,8 @@ class ColoradoForCorp extends BaseFormHandler {
                 console.error('Link not found');
               }
             });           
-            await page.waitForSelector('td > a[href="helpFiles/ProfitCorpintro.html"]', { visible: true, timeout: 60000 });
-            await page.click('td > a[href="helpFiles/ProfitCorpintro.html"]');
+            await page.waitForSelector('a[aria-label="Articles of Incorporation for a Profit Corporation- file online"]');
+            await page.click('a[aria-label="Articles of Incorporation for a Profit Corporation- file online"]');
             await this.clickButton(page, '.w3-btn-next');
             const inputFields = [
                 { label: 'name', value: payload.Name.Legal_Name }
