@@ -1,0 +1,191 @@
+{
+  "1": {
+    "orderType": "Entity Formation",
+    "EntityType": {
+      "createdBy": null,
+      "creationDate": null,
+      "lastModifiedBy": null,
+      "lastModifiedDate": null,
+      "id": 1,
+      "orderShortName": "CORP",
+      "orderFullDesc": "CORP"
+    },
+    "State": {
+      "createdBy": null,
+      "creationDate": null,
+      "lastModifiedBy": null,
+      "lastModifiedDate": null,
+      "id": 9,
+      "stateShortName": "AL",
+      "stateFullDesc": "Alabama",
+      "stateUrl": "https://efile.sunbiz.org",
+      "filingWebsiteUsername": "orders@vstatefilings.com",
+      "filingWebsitePassword": "Benjamin301!",
+      "countryMaster": {
+        "createdBy": null,
+        "creationDate": null,
+        "lastModifiedBy": null,
+        "lastModifiedDate": null,
+        "id": 3,
+        "countryShortName": "USA",
+        "countryFullDesc": "United States Of America"
+      }
+    },
+    "County": {
+      "countyName": "Albany"
+    },
+    "payload": {
+      "Name": {
+        "Legal_Name": "Red Corporation",
+        "Alternate_Legal_Name": "White Corp"
+      },
+      "Naics_Code": {
+        "Naics_Code": "541511"
+      },
+      "Registered_Agent": {
+        "Address": {
+          "City": "Birmingham",
+          "State": "AL",
+          "Zip_Code": "35201",
+          "Address_Line_2": "Suite 100",
+          "Street_Address": "123 Main Street"
+        },
+        "EmailId": "agent@redcorp.com",
+        "ContactNo": "205-555-0123",
+        "keyPersonnelName": "Sam Sharan",
+        "Mailing_Information": {
+          "City": "Birmingham",
+          "name": "Sam Sharan",
+          "State": "AL",
+          "Zip_Code": "35201",
+          "Contact_No": "205-555-0123",
+          "Email_Address": "agent@redcorp.com",
+          "Address_Line_2": "Suite 100",
+          "Street_Address": "123 Main Street"
+        }
+      },
+      "Principal_Address": {
+        "City": "Birmingham",
+        "State": "AL",
+        "Zip_Code": "35201",
+        "Address_Line_2": "Suite 200",
+        "Street_Address": "456 Business Avenue"
+      },
+      "Stock_Details": {
+        "Number_Of_Shares": 1000,
+        "Shares_Par_Value": 1.00,
+        "Stock_Type": "Common"
+      },
+      "Director_Information": {
+        "Director_Details": {
+          "keyPersonnelName": "Ronit Roy",
+          "Title": "Director",
+          "Contact_No": "205-555-0124",
+          "Email_Address": "ronit.roy@redcorp.com"
+        },
+        "Address": {
+          "Street_Address": "789 Director Lane",
+          "Address_Line_2": "Apt 5B",
+          "State": "AL",
+          "City": "Birmingham",
+          "Zip_Code": "35202"
+        }
+      },
+      "Purpose": {
+        "Purpose_Details": "Any lawful business purpose"
+      },
+      "Incorporator_Information": {
+        "Incorporator_Details": {
+          "keyPersonnelName": "Pawan Singh",
+          "Title": "Incorporator",
+          "Contact_No": "205-555-0125",
+          "Email_Address": "pawan.singh@redcorp.com"
+        },
+        "Contact_No": "205-555-0125",
+        "Email_Address": "pawan.singh@redcorp.com",
+        "Address": {
+          "Street_Address": "321 Incorporator Drive",
+          "Address_Line_2": "",
+          "State": "AL",
+          "City": "Birmingham",
+          "Zip_Code": "35203"
+        }
+      },
+      "County": {
+        "countyName": "Jefferson"
+      },
+      "Contact_Information": {
+        "Name": "Saumyaranjan Patra",
+        "Address": {
+          "City": "Birmingham",
+          "State": "AL",
+          "Zip_Code": "35204",
+          "Address_Line_2": "Office 15",
+          "Street_Address": "654 Contact Street"
+        },
+        "Contact_No": "205-555-0126",
+        "Email_Address": "contact@redcorp.com"
+      },
+      "Officer_Information": {
+        "Officer_Details": {
+          "Name": "Ronit Roy",
+          "Title": "President",
+          "Off_Name": {
+            "First": "Ronit",
+            "Last": "Roy"
+          },
+          "Contact_No": "205-555-0127",
+          "Off_EmailId": "president@redcorp.com"
+        },
+        "Address": {
+          "Street_Address": "987 Officer Boulevard",
+          "Address_Line_2": "Suite 300",
+          "City": "Birmingham",
+          "State": "AL",
+          "Zip_Code": "35205"
+        }
+      },
+      "Shareholder_Information": [
+        {
+          "Shareholder_Name": {
+            "firstName": "Ronit",
+            "lastName": "Roy"
+          },
+          "Shares_Owned": 500,
+          "Address": {
+            "Street_Address": "987 Officer Boulevard",
+            "Address_Line_2": "Suite 300",
+            "City": "Birmingham",
+            "State": "AL",
+            "Zip_Code": "35205"
+          }
+        },
+        {
+          "Shareholder_Name": {
+            "firstName": "Pawan",
+            "lastName": "Singh"
+          },
+          "Shares_Owned": 500,
+          "Address": {
+            "Street_Address": "321 Incorporator Drive",
+            "Address_Line_2": "",
+            "City": "Birmingham",
+            "State": "AL",
+            "Zip_Code": "35203"
+          }
+        }
+      ],
+      "Corporate_Structure": {
+        "Board_Size": 3,
+        "Annual_Meeting_Date": "12-31",
+        "Fiscal_Year_End": "12-31"
+      },
+      "Business_Details": {
+        "Business_Type": "For-Profit",
+        "Industry": "Professional Services",
+        "Description": "Providing professional consulting services"
+      }
+    },
+    "formProgress": 100
+  }
+} 
