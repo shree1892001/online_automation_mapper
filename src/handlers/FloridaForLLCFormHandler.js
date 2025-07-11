@@ -99,7 +99,7 @@ class FloridaForLLC extends BaseFormHandler {
             const raFirstNameField = this.extractFieldName(stateMapping[46].online_field_mapping);
             await this.fillInputByName(page, raFirstNameField, firstName);
 
-            const raLastNameField = this.extractFieldName(stateMapping[69].online_field_mapping);
+            const raLastNameField = this.extractFieldName(stateMapping[65].online_field_mapping);
             await this.fillInputByName(page, raLastNameField, lastName);
             
             // Fill registered agent address using database mappings
@@ -138,11 +138,9 @@ class FloridaForLLC extends BaseFormHandler {
             const off1NameTitleField = this.extractFieldName(stateMapping[32].online_field_mapping);
             await this.fillInputByName(page, off1NameTitleField, 'MGR');
             
-            // Fill officer name fields using database mappings
-            const off1FirstNameField = this.extractFieldName(stateMapping[63].online_field_mapping).replace('${index + 1}', '1');
-            const off1LastNameField = this.extractFieldName(stateMapping[62].online_field_mapping).replace('${index + 1}', '1');
-            await this.fillInputByName(page, off1FirstNameField, ofcrfirstName);
-            await this.fillInputByName(page, off1LastNameField, ofcrlastName);
+            // Fill officer name fields using hardcoded selectors since they're not in database mappings
+            await this.fillInputByName(page, 'off1_name_first_name', ofcrfirstName);
+            await this.fillInputByName(page, 'off1_name_last_name', ofcrlastName);
             
             // Fill officer address fields using database mappings
             const off1NameAddr1Value = await this.getValueFromPayload(payload, stateMapping[25].json_key);
@@ -224,21 +222,18 @@ class FloridaForLLC extends BaseFormHandler {
                 const title = memOrMgr === 'Member' ? 'AMBR' : 'MGR';
 
                 // Fill member/manager fields using database mappings
-                const titleSelector = this.extractFieldName(stateMapping[61].online_field_mapping).replace('${index + 1}', index + 1);
-                
-                // Use hardcoded selectors for member/manager name fields since they're not in database mappings
-                const lastNameSelector = `off${index + 1}_name_last_name`;
-                const firstNameSelector = `off${index + 1}_name_first_name`;
-                
-                const addr1Selector = this.extractFieldName(stateMapping[64].online_field_mapping).replace('${index + 1}', index + 1);
-                const citySelector = this.extractFieldName(stateMapping[65].online_field_mapping).replace('${index + 1}', index + 1);
-                const stateSelector = this.extractFieldName(stateMapping[66].online_field_mapping).replace('${index + 1}', index + 1);
-                const zipSelector = this.extractFieldName(stateMapping[67].online_field_mapping).replace('${index + 1}', index + 1);
+                const titleSelector = this.extractFieldName(stateMapping[59].online_field_mapping).replace('${index + 1}', index + 1);
+                const lastNameSelector = this.extractFieldName(stateMapping[68].online_field_mapping).replace('${index + 1}', index + 1);
+                const firstNameSelector = this.extractFieldName(stateMapping[69].online_field_mapping).replace('${index + 1}', index + 1);
+                const addr1Selector = this.extractFieldName(stateMapping[60].online_field_mapping).replace('${index + 1}', index + 1);
+                const citySelector = this.extractFieldName(stateMapping[61].online_field_mapping).replace('${index + 1}', index + 1);
+                const stateSelector = this.extractFieldName(stateMapping[62].online_field_mapping).replace('${index + 1}', index + 1);
+                const zipSelector = this.extractFieldName(stateMapping[63].online_field_mapping).replace('${index + 1}', index + 1);
 
                 await this.fillInputByName(page, titleSelector, title);
                 
-                if (member.Mom_Name) {
-                    const [firstName, lastName] = await this.ra_split(member.Mom_Name);
+                if (member.keyPersonnelName) {
+                    const [firstName, lastName] = await this.ra_split(member.keyPersonnelName);
                     await this.fillInputByName(page, lastNameSelector, lastName);
                     await this.fillInputByName(page, firstNameSelector, firstName);
                 }

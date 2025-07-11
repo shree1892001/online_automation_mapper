@@ -90,7 +90,7 @@ class GeorgiaForCorp extends BaseFormHandler {
             await this.clickDropdown(page,"#ddlDomestic","Domestic Professional Corporation"); 
 
            await this.randomSleep(1000,2000);  
-           await this.clickDropdown(page,"#ddlProfessionStatement",payload.Naics_Code.NC_NAICS_Sub_Code); 
+           await this.clickDropdown(page,"#ddlProfessionStatement",payload.Naics_Code.Naics_Sub_Code); 
            await this.randomSleep(1000,2000);  
 
            const bussuinessName=[
@@ -101,10 +101,10 @@ class GeorgiaForCorp extends BaseFormHandler {
         ]
 
         await this.addInput(page,bussuinessName); 
- await this.clickDropdown(page,"#ddlNaicsCode",payload.Naics_Code.NC_NAICS_Code); 
+ await this.clickDropdown(page,"#ddlNaicsCode",payload.Naics_Code.Naics_Code); 
  await this.randomSleep(10000,20000);
 
- await this.clickDropdown(page,"#ddlNAICSSubCode",payload.Naics_Code.NC_NAICS_Sub_Code);
+ await this.clickDropdown(page,"#ddlNAICSSubCode",payload.Naics_Code.Naics_Sub_Code);
 await this.randomSleep(10000,20000);
        let zip = "PrincipalOfficeAddress_Zip5";
        let zip5 = "PrincipalOfficeAddress_PostalCode";

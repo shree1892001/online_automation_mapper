@@ -97,7 +97,7 @@ class GeorgiaForLLC extends BaseFormHandler {
        await this.addInput(page,bussuinessName); 
        await this.clickDropdown(page,"#ddlNaicsCode",payload.Naics_Code.NC_NAICS_Code); 
        await this.randomSleep(10000,20000);
-       await this.clickDropdown(page,"#ddlNAICSSubCode",payload.Naics_Code.NC_NAICS_Sub_Code);
+       await this.clickDropdown(page,"#ddlNAICSSubCode",payload.Naics_Code.Naics_Code);
        let zip = "PrincipalOfficeAddress_Zip5";
        let zip5 = "PrincipalOfficeAddress_PostalCode";
        

@@ -110,7 +110,7 @@ class NewhampshireForCORP extends BaseFormHandler {
       await page.select('#ddlBusinessPurpose', '11-Agriculture, Forestry, Fishing and Hunting');
  
       await new Promise(resolve => setTimeout(resolve, 3000))
-      await page.select('#ddlNAICSSubCode', Payload.Naics_Code.NC_NAICS_Sub_Code);
+      await page.select('#ddlNAICSSubCode', payload.Naics_Code.Naics_Code);
      
       await page.click('#imgAddPurpose');
      
