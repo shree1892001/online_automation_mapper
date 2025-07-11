@@ -106,12 +106,12 @@ class MassachusettsForCORP extends BaseFormHandler {
             await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtLastName",incFullName1[1]);
            
             await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtResAddress",payload.Director_Information.Address.Dir_Address_Line_1);
-            await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtCity",payload.Director_Information.Address.Dir_City);
+            await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtCity",payload.Director_Information.Address.City);
 
-            await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtZip", String(payload.Director_Information.Address.Dir_Zip_Code))
+            await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtZip", String(payload.Director_Information.Address.Zip_Code))
 
             
-            // await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtZip",payload.Director_Information.Address.Dir_Zip_Code.toString())
+            // await this.fillInputByName(page,"ctl00$MainContent$OfficersControl1$txtZip",payload.Director_Information.Address.Zip_Code.toString())
             console.log("COntinue button clicked"); 
 
             await page.waitForSelector(submitButtonSelector, { visible: true });

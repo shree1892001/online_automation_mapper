@@ -128,8 +128,8 @@ class KansasForCORP extends BaseFormHandler {
           {label: 'MainContent_txtDirectorName',value: payload.Director_Information.Director_Details.Name},
           {label: 'MainContent_txtDirectorAddress1',value: payload.Director_Information.Address.Street_Address},
           {label: 'MainContent_txtDirectorAddress2',value: payload.Director_Information.Address.Dir_Address_Line_2 ||"" },
-          {label: 'MainContent_txtDirectorZip',value: String(payload.Director_Information.Address.Dir_Zip_Code)},
-          {label: 'MainContent_txtDirectorCity',value: payload.Director_Information.Address.Dir_City }
+          {label: 'MainContent_txtDirectorZip',value: String(payload.Director_Information.Address.Zip_Code)},
+          {label: 'MainContent_txtDirectorCity',value: payload.Director_Information.Address.City }
         ];
         await this.addInput(page, directorinfo);
         await this.clickDropdown(page, '#MainContent_ddlDirectorCountry', 'USA');

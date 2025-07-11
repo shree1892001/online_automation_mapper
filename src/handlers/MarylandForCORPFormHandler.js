@@ -93,8 +93,8 @@ class MarylandForCORP extends BaseFormHandler {
             await this.fillInputByName(page, 'Director.LastName', orglastName);
             await this.fillInputByName(page, 'Director.PersonAddress.AddressStreet1', payload.Director_Information.Address.Dir_Address_Line_1);
             await this.fillInputByName(page, 'Director.PersonAddress.AddressStreet2', payload.Director_Information.Address.Dir_Address_Line_2 ||"");
-            await this.fillInputByName(page, 'Director.PersonAddress.AddressCity', payload.Director_Information.Address.Dir_City);
-            await this.fillInputByName(page, 'Director.PersonAddress.AddressZip', payload.Director_Information.Address.Dir_Zip_Code.toString());
+            await this.fillInputByName(page, 'Director.PersonAddress.AddressCity', payload.Director_Information.Address.City);
+            await this.fillInputByName(page, 'Director.PersonAddress.AddressZip', payload.Director_Information.Address.Zip_Code.toString());
             await this.clickButton(page, 'button[type="submit"].btn.btn-primary');
             await this.clickButton(page, 'button[name="IndexAndContinue"]');
             await this.clickButton(page, '#btnSubmitUBD');

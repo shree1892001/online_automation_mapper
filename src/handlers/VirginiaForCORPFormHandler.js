@@ -197,8 +197,8 @@ class VirginiaForCORP extends BaseFormHandler {
         // Director Address
         await new Promise(resolve => setTimeout(resolve, 4000))
         await this.fillInputByName(page, 'PrincipalInfoName.StreetAddress1', Payload.Director_Information.Address.Dir_Address_Line_1);
-        await this.fillInputByName(page, 'PrincipalInfoName.City', Payload.Director_Information.Address.Dir_City);
-        await this.fillInputByName(page, 'PrincipalInfoName.Zip5', Payload.Director_Information.Address.Dir_Zip_Code.toString());
+        await this.fillInputByName(page, 'PrincipalInfoName.City', payload.Director_Information.Address.City);
+        await this.fillInputByName(page, 'PrincipalInfoName.Zip5', payload.Director_Information.Address.Zip_Code.toString());
       
 
         // Add director

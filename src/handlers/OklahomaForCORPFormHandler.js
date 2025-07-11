@@ -60,8 +60,8 @@ class OklahomaForCORP extends BaseFormHandler {
             await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$_lastName',dirlastName );
             await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$Address1$_address1', payload.Director_Information.Address.Dir_Address_Line_1);
             await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$Address1$_address2', payload.Director_Information.Address.Dir_Address_Line_2  || " ");
-            await this.fillInputByName(page,'ctl00$DefaultContent$wiz1$Address1$_city',payload.Director_Information.Address.Dir_City);
-            await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$Address1$_zipcode',String(payload.Director_Information.Address.Dir_Zip_Code.toString()));
+            await this.fillInputByName(page,'ctl00$DefaultContent$wiz1$Address1$_city',payload.Director_Information.Address.City);
+            await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$Address1$_zipcode',String(payload.Director_Information.Address.Zip_Code.toString()));
             await this.fillInputByName(page, 'ctl00$DefaultContent$wiz1$Address1$_email',payload.Director_Information.Director_Details.Dir_Email_Address);
             await this.clickButton(page, '#ctl00_DefaultContent_wiz1_UpdateButton');
             await this.clickButton(page, '#ctl00_DefaultContent_wiz1_bNext');

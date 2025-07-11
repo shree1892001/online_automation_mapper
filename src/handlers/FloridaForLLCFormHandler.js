@@ -94,7 +94,7 @@ class FloridaForLLC extends BaseFormHandler {
             // Fill registered agent information using database mappings
             const rafullname = await this.getValueFromPayload(payload, stateMapping[10].json_key);
             const [firstName, lastName] = await this.ra_split(rafullname);
-            
+
             // Fill registered agent name fields using database mappings
             const raFirstNameField = this.extractFieldName(stateMapping[46].online_field_mapping);
             await this.fillInputByName(page, raFirstNameField, firstName);
@@ -164,7 +164,7 @@ class FloridaForLLC extends BaseFormHandler {
             
             // Get continue button selector from database
             await page.click(stateMapping[33].online_field_mapping);
-            
+
             const res = "form filled successfully";
             return res;
 
@@ -213,7 +213,7 @@ class FloridaForLLC extends BaseFormHandler {
         const memberDetails = payload.Member_Or_Manager_Details;
         if (!memberDetails || !Array.isArray(memberDetails)) return;
 
-        let index = 0;
+            let index = 0;
         while (index < memberDetails.length) {
             const member = memberDetails[index];
             
