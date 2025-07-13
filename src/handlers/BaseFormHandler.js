@@ -906,18 +906,30 @@ class BaseFormHandler {
             console.error(`Clicking on "${titleText}" failed:`, error);
         }
     }
-    async clickOnLinkByText(page,linkText){
-        await page.waitForSelector('a');
+    async clickOnLinkByText(page, linkText) {
+        try {
+            await page.waitForSelector('a', { timeout: 10000 });
+            
             // Find and click the link with matching text
-            await page.evaluate((linkText) => {
-            const anchorTags = Array.from(document.querySelectorAll('a'));
-            const targetLink = anchorTags.find(anchor => anchor.innerText.trim() === linkText);
-            if (targetLink) {
-                targetLink.click();
-            } else {
-                console.log(`Link with text "${linkText}" not found`);
-            }
+            const clicked = await page.evaluate((linkText) => {
+                const anchorTags = Array.from(document.querySelectorAll('a'));
+                const targetLink = anchorTags.find(anchor => anchor.innerText.trim() === linkText);
+                if (targetLink) {
+                    targetLink.click();
+                    return true;
+                } else {
+                    console.log(`Link with text "${linkText}" not found`);
+                    return false;
+                }
             }, linkText);
+            
+            if (!clicked) {
+                throw new Error(`Link with text "${linkText}" not found`);
+            }
+        } catch (error) {
+            logger.error(`Error clicking link with text "${linkText}":`, error);
+            throw error;
+        }
     }
     async clickSpanByText(page, text) {
         try {
@@ -954,10 +966,28 @@ class BaseFormHandler {
     }
     async ra_split(ra_full_name) {
         return new Promise((resolve) => {
-          const s1 = ra_full_name.split(" ");
-          const firstWord = s1[0]; // The first word (s1)
-          const remainingWords = s1.slice(1).join(" "); // The rest (s2)
-          resolve([firstWord, remainingWords]); // Return both values as an array
+          try {
+            // Ensure ra_full_name is a string and not null/undefined
+            if (!ra_full_name || typeof ra_full_name !== 'string') {
+              console.warn(`Invalid input to ra_split: ${ra_full_name}, type: ${typeof ra_full_name}`);
+              resolve(['', '']);
+              return;
+            }
+            
+            const trimmedName = ra_full_name.trim();
+            if (trimmedName === '') {
+              resolve(['', '']);
+              return;
+            }
+            
+            const s1 = trimmedName.split(" ");
+            const firstWord = s1[0] || ''; // The first word (s1)
+            const remainingWords = s1.slice(1).join(" ") || ''; // The rest (s2)
+            resolve([firstWord, remainingWords]); // Return both values as an array
+          } catch (error) {
+            console.error(`Error in ra_split: ${error.message}`);
+            resolve(['', '']);
+          }
         });
     }
     
