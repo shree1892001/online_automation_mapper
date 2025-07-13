@@ -8,84 +8,33 @@ class DcForLLC extends BaseFormHandler {
         super();
     }
 
-    // Helper function to get selector by field name
-    async getSelectorByFieldName(stateMapping, fieldName) {
-        try {
-            logger.info(`Looking for selector for field: ${fieldName}`);
-            const mapping = stateMapping.find(item => 
-                item.online_field_mapping === fieldName || 
-                item.online_field_mapping === `select[name="${fieldName}"]` ||
-                item.online_field_mapping === `input[name="${fieldName}"]` ||
-                item.online_field_mapping === `textarea[name="${fieldName}"]`
-            );
-            
-            if (mapping && mapping.online_field_mapping) {
-                logger.info(`Found selector for ${fieldName}: ${mapping.online_field_mapping}`);
-                return mapping.online_field_mapping;
-            }
-            
-            logger.warn(`No selector found for field: ${fieldName}`);
-            return null;
-        } catch (error) {
-            logger.error(`Error getting selector for ${fieldName}:`, error);
-            return null;
-        }
-    }
-
-    // Helper function to get JSON key by field name
-    async getJsonKeyByFieldName(stateMapping, fieldName) {
-        try {
-            logger.info(`Looking for JSON key for field: ${fieldName}`);
-            const mapping = stateMapping.find(item => 
-                item.online_field_mapping === fieldName || 
-                item.online_field_mapping === `select[name="${fieldName}"]` ||
-                item.online_field_mapping === `input[name="${fieldName}"]` ||
-                item.online_field_mapping === `textarea[name="${fieldName}"]`
-            );
-            
-            if (mapping && mapping.json_key) {
-                logger.info(`Found JSON key for ${fieldName}: ${mapping.json_key}`);
-                return mapping.json_key;
-            }
-            
-            logger.warn(`No JSON key found for field: ${fieldName}`);
-            return null;
-        } catch (error) {
-            logger.error(`Error getting JSON key for ${fieldName}:`, error);
-            return null;
-        }
-    }
-
-    // Helper function to get value from payload using JSON key path
-    getValueFromPayload(payload, jsonKeyPath) {
-        try {
-            if (!jsonKeyPath) return null;
-            
-            const keys = jsonKeyPath.split('.');
-            let value = payload;
-            
-            for (const key of keys) {
-                if (value && typeof value === 'object' && key in value) {
-                    value = value[key];
-                } else {
-                    logger.warn(`Key ${key} not found in payload path: ${jsonKeyPath}`);
-                    return null;
-                }
-            }
-            
-            logger.info(`Retrieved value for ${jsonKeyPath}: ${value}`);
-            return value;
-        } catch (error) {
-            logger.error(`Error getting value from payload for ${jsonKeyPath}:`, error);
-            return null;
-        }
-    }
-
     async DcForLLC(page,jsonData,payload) {
         try {
             logger.info('Starting DC LLC form submission...');
             const data = Object.values(jsonData)[0];
             const stateMapping = await fetchByState(data.State.id);
+            
+            // Add defensive check for stateMapping
+            if (!stateMapping || !Array.isArray(stateMapping) || stateMapping.length === 0) {
+                throw new Error('No state mapping found for the given state ID: ' + data.State.id);
+            }
+            
+            // Helper function to safely get value from payload
+            const getSafeValue = async (jsonKey) => {
+                try {
+                    const value = await this.getValueFromPayload(payload, jsonKey);
+                    console.log(`Raw value for ${jsonKey}:`, value, 'Type:', typeof value);
+                    if (value === null || value === undefined) {
+                        return '';
+                    }
+                    const stringValue = String(value);
+                    console.log(`Converted value for ${jsonKey}:`, stringValue, 'Type:', typeof stringValue);
+                    return stringValue;
+                } catch (error) {
+                    console.log(`Error getting value for ${jsonKey}:`, error.message);
+                    return '';
+                }
+            };
             
             logger.info(`Retrieved ${stateMapping.length} mappings from database`);
             
@@ -99,230 +48,134 @@ class DcForLLC extends BaseFormHandler {
             const url = data.State.stateUrl;
             await this.navigateToPage(page, url);
             
-            // Get login link selector
-            const loginLinkSelector = await this.getSelectorByFieldName(stateMapping, 'a[href="/Account.aspx/AccessDcLogOn?isAccessDc=true"]');
-            if (loginLinkSelector) {
-                await page.click(loginLinkSelector);
-            } else {
-                logger.warn('Login link selector not found, using fallback');
-                await page.click('a[href="/Account.aspx/AccessDcLogOn?isAccessDc=true"]');
-            }
-            
+            // Login section using database mappings (LLC mappings start from index 69)
+            await page.click(stateMapping[69].online_field_mapping);
             const inputFields = [
-                { label: 'input28', value: data.State.filingWebsiteUsername },
-                { label: 'input36', value: data.State.filingWebsitePassword }
+                { label: stateMapping[70].online_field_mapping, value: data.State.filingWebsiteUsername },
+                { label: stateMapping[71].online_field_mapping, value: data.State.filingWebsitePassword }
             ];
             await this.addInput(page,inputFields);
+            await page.click(stateMapping[72].online_field_mapping);
+            await page.click(stateMapping[73].online_field_mapping);
             
-            // Get remember me selector
-            const rememberMeSelector = await this.getSelectorByFieldName(stateMapping, 'input[name="rememberMe"]');
-            if (rememberMeSelector) {
-                await page.click(rememberMeSelector);
-            } else {
-                await page.click('input[name="rememberMe"]');
+            // Wait for and click wizard1 link
+            try {
+                await page.waitForSelector(stateMapping[74].online_field_mapping, { timeout: 10000 });
+                await page.click(stateMapping[74].online_field_mapping);
+            } catch (error) {
+                logger.warn('Wizard1 link not found, trying alternative approach');
+                // Try alternative navigation
+                await page.waitForSelector('a[href="/Home.aspx/wizard1"]', { timeout: 10000 });
+                await page.click('a[href="/Home.aspx/wizard1"]');
             }
             
-            // Get sign in button selector
-            const signInSelector = await this.getSelectorByFieldName(stateMapping, 'input.button.button-primary[type="submit"][value="Sign in"]');
-            if (signInSelector) {
-                await page.click(signInSelector);
-            } else {
-                await page.click('input.button.button-primary[type="submit"][value="Sign in"]');
+            // Wait for and click wizard3 link
+            try {
+                await page.waitForSelector(stateMapping[75].online_field_mapping, { timeout: 10000 });
+                await page.click(stateMapping[75].online_field_mapping);
+            } catch (error) {
+                logger.warn('Wizard3 link not found, trying alternative approach');
+                // Try alternative navigation
+                await page.waitForSelector('a.my-button[href="/Home.aspx/wizard3"]', { timeout: 10000 });
+                await page.click('a.my-button[href="/Home.aspx/wizard3"]');
             }
             
-            // Get wizard1 link selector
-            const wizard1Selector = await this.getSelectorByFieldName(stateMapping, 'a[href="/Home.aspx/wizard1"]');
-            await page.waitForSelector(wizard1Selector || 'a[href="/Home.aspx/wizard1"]');
-            await page.click(wizard1Selector || 'a[href="/Home.aspx/wizard1"]');
-            
-            // Get wizard3 link selector
-            const wizard3Selector = await this.getSelectorByFieldName(stateMapping, 'a.my-button[href="/Home.aspx/wizard3"]');
-            await page.waitForSelector(wizard3Selector || 'a.my-button[href="/Home.aspx/wizard3"]');
-            await page.click(wizard3Selector || 'a.my-button[href="/Home.aspx/wizard3"]');
-            
-            // Get service redirect selector (LLC uses 119)
-            const serviceRedirectSelector = await this.getSelectorByFieldName(stateMapping, 'a[href="/Biz.aspx/RedirectFromNewService/119"]');
-            await page.waitForSelector(serviceRedirectSelector || 'a[href="/Biz.aspx/RedirectFromNewService/119"]');
-            await page.click(serviceRedirectSelector || 'a[href="/Biz.aspx/RedirectFromNewService/119"]');
-            
-            // Get next button selector
-            const nextButtonSelector = await this.getSelectorByFieldName(stateMapping, '#NextButton');
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
-            
-            // Fill business name
-            const businessNameSelector = await this.getSelectorByFieldName(stateMapping, 'BizData.BusinessName');
-            const businessNameJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'BizData.BusinessName');
-            const businessNameValue = this.getValueFromPayload(payload, businessNameJsonKey) || payload.Name.Legal_Name;
-            if (businessNameSelector) {
-                await this.fillInputByName(page, businessNameSelector, businessNameValue);
-            } else {
-                await this.fillInputByName(page, 'BizData.BusinessName', businessNameValue);
+            // Wait for and click service redirect (LLC uses 119)
+            try {
+                await page.waitForSelector(stateMapping[76].online_field_mapping, { timeout: 10000 });
+                await page.click(stateMapping[76].online_field_mapping);
+            } catch (error) {
+                logger.warn('Service redirect link not found, trying alternative approach');
+                // Try alternative navigation
+                await page.waitForSelector('a[href="/Biz.aspx/RedirectFromNewService/119"]', { timeout: 10000 });
+                await page.click('a[href="/Biz.aspx/RedirectFromNewService/119"]');
             }
             
-            // Click business suffix dropdown
-            const businessSuffixSelector = await this.getSelectorByFieldName(stateMapping, 'select[name="BizData.BusinessSuffix"]');
-            if (businessSuffixSelector) {
-                await this.clickDropdown(page, businessSuffixSelector, 'Limited Liability Company');
-            } else {
-                await this.clickDropdown(page, 'select[name="BizData.BusinessSuffix"]', 'Limited Liability Company');
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
+            
+            // Business Information using database mappings (LLC mappings start from index 60)
+            try {
+                const businessName = await getSafeValue(stateMapping[60].json_key);
+                console.log('Business name value:', businessName, 'Type:', typeof businessName);
+                const businessNameStr = businessName ? String(businessName) : '';
+                await this.fillInputByName(page, stateMapping[60].online_field_mapping, businessNameStr);
+            } catch (error) {
+                console.error('Error filling business name:', error);
+                await this.fillInputByName(page, stateMapping[60].online_field_mapping, '');
             }
             
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
+            // Click business suffix dropdown (LLC uses "Limited Liability Company")
+            await this.clickDropdown(page, stateMapping[0].online_field_mapping, 'Limited Liability Company');
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
             
-            // Fill business address
-            const addressLine1Selector = await this.getSelectorByFieldName(stateMapping, 'CurrentBusinessAddress.Line1');
-            const addressLine1JsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentBusinessAddress.Line1');
-            const addressLine1Value = this.getValueFromPayload(payload, addressLine1JsonKey) || payload.Principal_Address.Street_Address;
-            if (addressLine1Selector) {
-                await this.fillInputByName(page, addressLine1Selector, addressLine1Value);
+            // Business Address using database mappings (LLC mappings start from index 61)
+            await this.fillInputByName(page, stateMapping[61].online_field_mapping, await getSafeValue(stateMapping[61].json_key));
+            await this.fillInputByName(page, stateMapping[62].online_field_mapping, await getSafeValue(stateMapping[62].json_key));
+            await this.fillInputByName(page, stateMapping[63].online_field_mapping, await getSafeValue(stateMapping[63].json_key));
+            await new Promise(resolve => setTimeout(resolve, 3000))
+            await this.clickDropdown(page, stateMapping[77].online_field_mapping, 'District of Columbia');
+            await this.fillInputByName(page, stateMapping[64].online_field_mapping, await getSafeValue(stateMapping[64].json_key));
+            await page.click(stateMapping[18].online_field_mapping);
+            
+            // Registered Agent using database mappings
+            await this.clickDropdown(page, stateMapping[78].online_field_mapping, 'Business Filings');
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
+            
+            // Contact Information using database mappings
+            const rafullname = await getSafeValue('Organizer_Information.keyPersonnelName');
+            let firstName = '', lastName = '';
+            if (rafullname && rafullname.trim() !== '') {
+                try {
+                    const nameParts = await this.ra_split(rafullname);
+                    firstName = nameParts[0] || '';
+                    lastName = nameParts[1] || '';
+                } catch (error) {
+                    console.log('Error splitting name:', error.message);
+                    firstName = rafullname;
+                    lastName = '';
+                }
             } else {
-                await this.fillInputByName(page, 'CurrentBusinessAddress.Line1', addressLine1Value);
+                console.log('Organizer name is empty, using empty values');
             }
             
-            const addressLine2Selector = await this.getSelectorByFieldName(stateMapping, 'CurrentBusinessAddress.Line2');
-            const addressLine2JsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentBusinessAddress.Line2');
-            const addressLine2Value = this.getValueFromPayload(payload, addressLine2JsonKey) || payload.Principal_Address['Address_Line_2'] || " ";
-            if (addressLine2Selector) {
-                await this.fillInputByName(page, addressLine2Selector, addressLine2Value);
-            } else {
-                await this.fillInputByName(page, 'CurrentBusinessAddress.Line2', addressLine2Value);
-            }
-            
-            const citySelector = await this.getSelectorByFieldName(stateMapping, 'CurrentBusinessAddress.City');
-            const cityJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentBusinessAddress.City');
-            const cityValue = this.getValueFromPayload(payload, cityJsonKey) || payload.Principal_Address.City;
-            if (citySelector) {
-                await this.fillInputByName(page, citySelector, cityValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentBusinessAddress.City', cityValue);
-            }
-            
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            
-            // Click state dropdown
-            const stateSelector = await this.getSelectorByFieldName(stateMapping, 'select[name="CurrentBusinessAddress.State"]');
-            if (stateSelector) {
-                await this.clickDropdown(page, stateSelector, 'District of Columbia');
-            } else {
-                await this.clickDropdown(page, 'select[name="CurrentBusinessAddress.State"]', 'District of Columbia');
-            }
-            
-            const zipSelector = await this.getSelectorByFieldName(stateMapping, 'CurrentBusinessAddress.Zip');
-            const zipJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentBusinessAddress.Zip');
-            const zipValue = this.getValueFromPayload(payload, zipJsonKey) || String(payload.Principal_Address.Zip_Code);
-            if (zipSelector) {
-                await this.fillInputByName(page, zipSelector, zipValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentBusinessAddress.Zip', zipValue);
-            }
-            
-            await page.click(nextButtonSelector || '#NextButton');
-            
-            // Click registered agent dropdown
-            const registeredAgentSelector = await this.getSelectorByFieldName(stateMapping, 'select[name="BizData.RegisteredAgent.RegisteredAgentId"]');
-            if (registeredAgentSelector) {
-                await this.clickDropdown(page, registeredAgentSelector, 'Business Filings');
-            } else {
-                await this.clickDropdown(page, 'select[name="BizData.RegisteredAgent.RegisteredAgentId"]', 'Business Filings');
-            }
-            
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
-            
-            // Fill contact information
-            const rafullname = payload.Organizer_Information.keyPersonnelName;
-            const [firstName, lastName] = await this.ra_split(rafullname);
-            
-            const firstNameSelector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].FirstName');
-            const firstNameJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].FirstName');
-            const firstNameValue = this.getValueFromPayload(payload, firstNameJsonKey) || firstName;
-            if (firstNameSelector) {
-                await this.fillInputByName(page, firstNameSelector, firstNameValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].FirstName', firstNameValue);
-            }
-            
-            const lastNameSelector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].LastName');
-            const lastNameJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].LastName');
-            const lastNameValue = this.getValueFromPayload(payload, lastNameJsonKey) || lastName;
-            if (lastNameSelector) {
-                await this.fillInputByName(page, lastNameSelector, lastNameValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].LastName', lastNameValue);
-            }
+            // Use the actual organizer name instead of the database mapping
+            console.log('Using organizer name from keyPersonnelName:', rafullname);
+            await this.fillInputByName(page, stateMapping[38].online_field_mapping, firstName);
+            await this.fillInputByName(page, stateMapping[39].online_field_mapping, lastName);
             
             logger.info('Form submission complete for DC LLC');
             
-            // Fill contact address
-            const contactAddressLine1Selector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].Address.Line1');
-            const contactAddressLine1JsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].Address.Line1');
-            const contactAddressLine1Value = this.getValueFromPayload(payload, contactAddressLine1JsonKey) || payload.Organizer_Information.Address.Street_Address;
-            if (contactAddressLine1Selector) {
-                await this.fillInputByName(page, contactAddressLine1Selector, contactAddressLine1Value);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].Address.Line1', contactAddressLine1Value);
-            }
+            // Fill contact address using database mappings (LLC mappings start from index 65)
+            await this.fillInputByName(page, stateMapping[65].online_field_mapping, await getSafeValue(stateMapping[65].json_key));
+            await this.fillInputByName(page, stateMapping[66].online_field_mapping, await getSafeValue(stateMapping[66].json_key));
+            await this.fillInputByName(page, stateMapping[67].online_field_mapping, await getSafeValue(stateMapping[67].json_key));
+            await this.clickDropdown(page, stateMapping[79].online_field_mapping, 'District of Columbia');
+            await this.fillInputByName(page, stateMapping[68].online_field_mapping, await getSafeValue(stateMapping[68].json_key));
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping);
             
-            const contactAddressLine2Selector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].Address.Line2');
-            const contactAddressLine2JsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].Address.Line2');
-            const contactAddressLine2Value = this.getValueFromPayload(payload, contactAddressLine2JsonKey) || payload.Organizer_Information.Address.Address_Line_2 || " ";
-            if (contactAddressLine2Selector) {
-                await this.fillInputByName(page, contactAddressLine2Selector, contactAddressLine2Value);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].Address.Line2', contactAddressLine2Value);
-            }
-            
-            const contactCitySelector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].Address.City');
-            const contactCityJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].Address.City');
-            const contactCityValue = this.getValueFromPayload(payload, contactCityJsonKey) || payload.Organizer_Information.Address.City;
-            if (contactCitySelector) {
-                await this.fillInputByName(page, contactCitySelector, contactCityValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].Address.City', contactCityValue);
-            }
-            
-            // Click contact state dropdown
-            const contactStateSelector = await this.getSelectorByFieldName(stateMapping, 'select[name="CurrentContact[0].Address.State"]');
-            if (contactStateSelector) {
-                await this.clickDropdown(page, contactStateSelector, 'District of Columbia');
-            } else {
-                await this.clickDropdown(page, 'select[name="CurrentContact[0].Address.State"]', 'District of Columbia');
-            }
-            
-            const contactZipSelector = await this.getSelectorByFieldName(stateMapping, 'CurrentContact[0].Address.Zip');
-            const contactZipJsonKey = await this.getJsonKeyByFieldName(stateMapping, 'CurrentContact[0].Address.Zip');
-            const contactZipValue = this.getValueFromPayload(payload, contactZipJsonKey) || String(payload.Organizer_Information.Address.Zip_Code);
-            if (contactZipSelector) {
-                await this.fillInputByName(page, contactZipSelector, contactZipValue);
-            } else {
-                await this.fillInputByName(page, 'CurrentContact[0].Address.Zip', contactZipValue);
-            }
-            
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton');
-            
-            // Fill stipulation description
-            const stipulationSelector = await this.getSelectorByFieldName(stateMapping, 'textarea[name="CurrentStipulation[0].Description"]');
-            await page.waitForSelector(stipulationSelector || 'textarea[name="CurrentStipulation[0].Description"]');
-            await page.type(stipulationSelector || 'textarea[name="CurrentStipulation[0].Description"]', 
+            // Fill stipulation description using database mappings
+            await page.waitForSelector(stateMapping[80].online_field_mapping);
+            await page.type(stateMapping[80].online_field_mapping, 
                 'Miscellaneous Provisions include various clauses and stipulations that cover areas not addressed elsewhere in the document.');
             
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton'); 
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton'); 
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton'); 
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton'); 
-            await page.waitForSelector(nextButtonSelector || '#NextButton');
-            await page.click(nextButtonSelector || '#NextButton'); 
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping); 
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping); 
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping); 
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping); 
+            await page.waitForSelector(stateMapping[18].online_field_mapping);
+            await page.click(stateMapping[18].online_field_mapping); 
             
             const res = "form filled successfully";
             return res;
