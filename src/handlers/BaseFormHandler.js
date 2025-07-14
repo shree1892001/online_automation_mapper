@@ -993,11 +993,56 @@ class BaseFormHandler {
     
     async selectRadioButtonByLabel(page, labelText) {
         try {
-            // Wait for the radio button labels to be visible
-            await page.waitForSelector('label.radio-label', { visible: true});
-    
-            // Get all radio button labels within the document
-            const labels = await page.$$('label.radio-label');
+            // Try multiple label selectors to find radio buttons
+            const labelSelectors = [
+                'label.radio-label',
+                'label',
+                '.radio-label',
+                '[class*="radio"]',
+                '[class*="label"]'
+            ];
+            
+            let labels = [];
+            let foundSelector = null;
+            
+            // Try each selector until we find labels
+            for (const selector of labelSelectors) {
+                try {
+                    await page.waitForSelector(selector, { visible: true, timeout: 5000 });
+                    labels = await page.$$(selector);
+                    if (labels.length > 0) {
+                        foundSelector = selector;
+                        console.log(`Found ${labels.length} labels using selector: ${selector}`);
+                        break;
+                    }
+                } catch (error) {
+                    console.log(`Selector ${selector} not found or no elements`);
+                }
+            }
+            
+            if (labels.length === 0) {
+                console.log(`No radio button labels found with any selector. Looking for radio buttons directly...`);
+                // Try to find radio buttons directly
+                const radioButtons = await page.$$('input[type="radio"]');
+                console.log(`Found ${radioButtons.length} radio buttons directly`);
+                
+                // Log all available radio button labels for debugging
+                const allLabels = await page.$$('label');
+                const labelTexts = await Promise.all(allLabels.map(label => page.evaluate(el => el.textContent.trim(), label)));
+                console.log("All available label texts:", labelTexts);
+                
+                // Try to find and click any label that contains our text
+                for (const label of allLabels) {
+                    const text = await page.evaluate(el => el.textContent.trim(), label);
+                    if (text.toLowerCase().includes(labelText.toLowerCase())) {
+                        await label.click();
+                        console.log(`Clicked label with text: "${text}"`);
+                        return;
+                    }
+                }
+                
+                throw new Error(`No radio button labels found for text: "${labelText}"`);
+            }
     
             // Log all available label texts for debugging
             const labelTexts = await Promise.all(labels.map(label => page.evaluate(el => el.textContent.trim(), label)));
@@ -1051,6 +1096,7 @@ class BaseFormHandler {
             console.log(`Label with text "${labelText}" not found.`);
         } catch (error) {
             console.error(`Error selecting radio button with label "${labelText}":`, error);
+            throw error; // Re-throw to allow caller to handle
         }
     }
       

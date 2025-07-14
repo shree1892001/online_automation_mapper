@@ -94,9 +94,13 @@ class IdahoForCORP extends BaseFormHandler {
             const usernameSelector = stateMapping[41]?.online_field_mapping;
             const passwordSelector = stateMapping[42]?.online_field_mapping;
             
+            // Get username and password from database mapping instead of hardcoded paths
+            const usernameValue = await this.getSafeValue(data, stateMapping[41]?.json_key) || data.State.filingWebsiteUsername;
+            const passwordValue = await this.getSafeValue(data, stateMapping[42]?.json_key) || data.State.filingWebsitePassword;
+            
             const inputFields = [
-                { label: usernameSelector, value: data.State.filingWebsiteUsername },
-                { label: passwordSelector, value: data.State.filingWebsitePassword }
+                { label: usernameSelector, value: usernameValue },
+                { label: passwordSelector, value: passwordValue }
             ];
             await this.addInput(page, inputFields);
             
@@ -217,9 +221,11 @@ class IdahoForCORP extends BaseFormHandler {
             
             // Country dropdown - using mapping index 5
             const countrySelector = stateMapping[5]?.online_field_mapping;
-            await this.clickDropdown(page, countrySelector, 'United States');
+            const countryValue = await this.getSafeValue(payload, stateMapping[5]?.json_key) || 'United States';
+            await this.clickDropdown(page, countrySelector, countryValue);
 
-            await this.selectRadioButtonByLabel(page, 'Noncommercial or Individual');
+            const noncommercialLabel = await this.getSafeValue(payload, stateMapping[7]?.json_key) || 'Noncommercial or Individual';
+            await this.selectRadioButtonByLabel(page, noncommercialLabel);
             
             // Add button - using mapping index 7
             const addButtonSelector = stateMapping[7]?.online_field_mapping;

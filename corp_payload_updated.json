@@ -7,20 +7,20 @@
       "lastModifiedBy": null,
       "lastModifiedDate": null,
       "id": 1,
-      "orderShortName": "CORP",
-      "orderFullDesc": "CORP"
+      "orderShortName": "LLC",
+      "orderFullDesc": "LLC"
     },
     "State": {
       "createdBy": null,
-      "creationDate": null,
+      "creatiomate": null,
       "lastModifiedBy": null,
       "lastModifiedDate": null,
-      "id": 13,
+      "id": 12,
       "stateShortName": "ID",
       "stateFullDesc": "Idaho",
       "stateUrl": "https://sosbiz.idaho.gov/forms/business",
       "filingWebsiteUsername": "alex@interstatefilings.com",
-      "filingWebsitePassword": "llcpubco",
+      "filingWebsitePassword": "llcpubco",  
       "countryMaster": {
         "createdBy": null,
         "creationDate": null,
@@ -32,44 +32,54 @@
       }
     },
     "County": {
-      "countyName": "Albany"
+      "countyName": "Ada"
     },
     "payload": {
       "Name": {
-        "Legal_Name": "Red Corporation",
-        "Alternate_Legal_Name": "White Corp"
+        "Legal_Name": "Red LLC",
+        "Alternate_Legal_Name": "White LLC"
       },
       "Naics_Code": {
         "Naics_Code": "541511"
       },
+      "Organizer_Information": {
+        "keyPersonnelName": "saumya patra",
+        "ContactNo":"83838383",
+        "EmailId": "ronit.roy@redcorp.com",
+        "Address": {
+          "Street_Address": "123 Main Street",
+          "City": "Boise",
+          "Zip_Code": "83702"
+        }
+      },
       "Registered_Agent": {
         "Address": {
-          "City": "Boise",
+          "City": "Meridian",
           "State": "ID",
-          "Zip_Code": "83702",
+          "Zip_Code": "83642",
           "Address_Line_2": "Suite 100",
-          "Street_Address": "123 Main Street"
+          "Street_Address": "456 Business Avenue"
         },
         "EmailId": "agent@redcorp.com",
         "ContactNo": "208-555-0123",
         "keyPersonnelName": "Sam Sharan",
         "Mailing_Information": {
-          "City": "Boise",
+          "City": "Nampa",
           "name": "Sam Sharan",
           "State": "ID",
-          "Zip_Code": "83702",
+          "Zip_Code": "83651",
           "Contact_No": "208-555-0123",
           "Email_Address": "agent@redcorp.com",
           "Address_Line_2": "Suite 100",
-          "Street_Address": "123 Main Street"
+          "Street_Address": "789 Principal Drive"
         }
       },
       "Principal_Address": {
-        "City": "Boise",
+        "City": "Caldwell",
         "State": "ID",
-        "Zip_Code": "83702",
+        "Zip_Code": "83605",
         "Address_Line_2": "Suite 200",
-        "Street_Address": "456 Business Avenue"
+        "Street_Address": "789 Principal Drive"
       },
       "Stock_Details": {
         "Number_Of_Shares": 1000,
@@ -80,15 +90,15 @@
         "Director_Details": {
           "keyPersonnelName": "Ronit Roy",
           "Title": "Director",
-          "Contact_No": "208-555-0124",
-          "Email_Address": "ronit.roy@redcorp.com"
+          "Contact_No": "208-555-0124"
+          
         },
         "Address": {
-          "Street_Address": "789 Director Lane",
+          "Street_Address": "321 Director Lane",
           "Address_Line_2": "Apt 5B",
           "State": "ID",
-          "City": "Boise",
-          "Zip_Code": "83703"
+          "City": "Eagle",
+          "Zip_Code": "83616"
         }
       },
       "Purpose": {
@@ -104,31 +114,31 @@
         "Contact_No": "208-555-0125",
         "Email_Address": "pawan.singh@redcorp.com",
         "Address": {
-          "Street_Address": "321 Incorporator Drive",
+          "Street_Address": "654 Incorporator Street",
           "Address_Line_2": "",
           "State": "ID",
-          "City": "Boise",
-          "Zip_Code": "83704"
+          "City": "Garden City",
+          "Zip_Code": "83714"
         }
       },
       "County": {
-        "countyName": "Jefferson"
+        "countyName": "Ada"
       },
       "Contact_Information": {
         "Name": "Saumyaranjan Patra",
         "Address": {
-          "City": "Boise",
+          "City": "Kuna",
           "State": "ID",
-          "Zip_Code": "83705",
+          "Zip_Code": "83634",
           "Address_Line_2": "Office 15",
-          "Street_Address": "654 Contact Street"
+          "Street_Address": "987 Contact Boulevard"
         },
         "Contact_No": "208-555-0126",
         "Email_Address": "contact@redcorp.com"
       },
       "Officer_Information": {
         "Officer_Details": {
-          "Name": "Ronit Roy",
+          "keyPersonnelName": "Ronit Roy",
           "Title": "President",
           "Off_Name": {
             "First": "Ronit",
@@ -138,11 +148,11 @@
           "Off_EmailId": "president@redcorp.com"
         },
         "Address": {
-          "Street_Address": "987 Officer Boulevard",
+          "Street_Address": "147 Officer Way",
           "Address_Line_2": "Suite 300",
-          "City": "Boise",
+          "City": "Star",
           "State": "ID",
-          "Zip_Code": "83706"
+          "Zip_Code": "83669"
         }
       },
       "Shareholder_Information": [
@@ -153,11 +163,11 @@
           },
           "Shares_Owned": 500,
           "Address": {
-            "Street_Address": "987 Officer Boulevard",
+            "Street_Address": "147 Officer Way",
             "Address_Line_2": "Suite 300",
-            "City": "Boise",
+            "City": "Star",
             "State": "ID",
-            "Zip_Code": "83706"
+            "Zip_Code": "83669"
           }
         },
         {
@@ -167,11 +177,11 @@
           },
           "Shares_Owned": 500,
           "Address": {
-            "Street_Address": "321 Incorporator Drive",
+            "Street_Address": "654 Incorporator Street",
             "Address_Line_2": "",
-            "City": "Boise",
+            "City": "Garden City",
             "State": "ID",
-            "Zip_Code": "83704"
+            "Zip_Code": "83714"
           }
         }
       ],
